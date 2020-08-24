@@ -1,0 +1,196 @@
+//
+//  CreateStoryVC.swift
+//  DailyFlash
+//
+//  Created by Alexey Kirpichnikov on 2020/7/27.
+//  Copyright © 2020 Alexey Kirpichnikov. All rights reserved.
+//
+
+import UIKit
+import CoreData
+
+final class CreateStoryVC: UIViewController {
+    
+    let eventNameLabel = UILabel()
+    var eventNameTF = UITextField()
+    
+    let dateLabel = UILabel()
+    let dateTF = UITextField()
+    
+    let datePicker = UIDatePicker()
+    
+    let saveButton = UIButton()
+    let cancelButton = UIButton()
+    
+    var layoutElements: [UIView] = []
+    
+    override func viewDidLoad() {
+        setupView()
+    }
+    
+    private func setupView() {
+        setupEventNameLabel()
+        setupEventNameTF()
+        
+        setupDateLabel()
+        setupDateTF()
+        
+        setupSaveButton()
+        setupCancelButton()
+        
+        setupUI()
+    }
+    
+    private func setupEventNameLabel() {
+        eventNameLabel.text = "Event name"
+        eventNameLabel.textColor = .customWhiteTitle
+    }
+    
+    private func setupEventNameTF() {
+        eventNameTF.backgroundColor = .customLightGray
+        eventNameTF.layer.cornerRadius = 20
+        
+        //eventNameTF.delegate = self
+    }
+    
+    private func setupDateLabel() {
+        dateLabel.text = "Date"
+        dateLabel.textColor = .customWhiteTitle
+    }
+    
+    private func setupDateTF() {
+        dateTF.backgroundColor = .customLightGray
+        dateTF.layer.cornerRadius = 20
+        
+        dateTF.setupInputViewDatePicker(target: self, selector: #selector(tappedDone))
+    }
+    
+    @objc func tappedDone() {
+        if let datePicker = dateTF.inputView as? UIDatePicker {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateTF.text = dateFormatter.string(from: datePicker.date)
+        }
+        
+        dateTF.resignFirstResponder()
+    }
+    
+    private func setupDatePicker() {
+        datePicker.datePickerMode = .date
+        let currentDate = Date()
+        datePicker.minimumDate = currentDate
+        
+        datePicker.setValue(UIColor.customWhiteTitle, forKey: "textColor")
+        datePicker.subviews[0].subviews[1].backgroundColor = .customWhiteTitle
+        datePicker.subviews[0].subviews[2].backgroundColor = .customWhiteTitle
+        
+    }
+    
+    
+    private func setupSaveButton() {
+        saveButton.backgroundColor = .green
+        saveButton.addTarget(self, action: #selector(saveStory), for: .touchUpInside)
+    }
+    
+    private func setupCancelButton() {
+        cancelButton.backgroundColor = .blue
+        cancelButton.addTarget(self, action: #selector(cancelStory), for: .touchUpInside)
+    }
+    
+    private func setupUI() {
+        
+        layoutElements = [eventNameLabel, eventNameTF, dateLabel, dateTF, saveButton, cancelButton]
+        
+        for layoutElement in layoutElements {
+            view.addSubview(layoutElement)
+            layoutElement.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        NSLayoutConstraint.activate([
+            eventNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            eventNameLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20),
+            eventNameLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
+            eventNameLabel.heightAnchor.constraint(equalToConstant: 24),
+            
+            eventNameTF.topAnchor.constraint(equalTo: eventNameLabel.bottomAnchor, constant: 5),
+            eventNameTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
+            eventNameTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
+            eventNameTF.heightAnchor.constraint(equalToConstant: 60),
+            
+            
+            dateLabel.topAnchor.constraint(equalTo: eventNameTF.bottomAnchor, constant: 20),
+            dateLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20),
+            dateLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
+            dateLabel.heightAnchor.constraint(equalToConstant: 24),
+            
+            dateTF.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
+            dateTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
+            dateTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
+            dateTF.heightAnchor.constraint(equalToConstant: 60),
+            
+            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            saveButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
+            saveButton.widthAnchor.constraint(equalToConstant: (view.frame.width/2) - 30),
+            saveButton.heightAnchor.constraint(equalToConstant: 60),
+            
+            cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            cancelButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
+            cancelButton.widthAnchor.constraint(equalToConstant: (view.frame.width/2) - 30),
+            cancelButton.heightAnchor.constraint(equalToConstant: 60)
+        ])
+    }
+    
+    private func saveToDB(date: Date, title: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Story", in: managedContext)!
+        
+        let story = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        story.setValue(title, forKey: "title")
+        story.setValue(date, forKey: "date")
+        
+        do {
+            try managedContext.save()
+            events.append(story)
+        } catch let error as NSError {
+            print("CreateStoryVC: Couldn't save. \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    @objc func saveStory() {
+        
+        //[Here should be the check for empty entities.]
+        //[If the user hasn't picked the date or hasn't written the title the user should see the Alert before the save action is implemented.]
+        
+        let eventDate = datePicker.date
+        print("Event date fetched successfuly: \(eventDate)")
+     
+        guard let titleText = eventNameTF.text else {
+            return print("CreateStoryVC: titleTF has no instance")
+        }
+        print("Event name fetched successfully: \(titleText)")
+        
+        self.saveToDB(date: eventDate, title: titleText ?? "No title")
+        
+        //[Navigation should be implemented like the move backword not like a pop-up.]
+        self.navigationController?.pushViewController(MainView(), animated: true)
+    }
+    
+    @objc func cancelStory() {
+        print(">>>>Cancel button is tapped: Story being cancelled")
+        self.navigationController?.pushViewController(MainView(), animated: true)
+    }
+    
+}
+
+extension CreateStoryVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+    }
+}
