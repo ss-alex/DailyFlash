@@ -16,6 +16,7 @@ final class CreateStoryVC: UIViewController {
     
     let dateLabel = UILabel()
     let dateTF = UITextField()
+    var dateTFString: String = ""
     
     let datePicker = UIDatePicker()
     
@@ -70,8 +71,11 @@ final class CreateStoryVC: UIViewController {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dateTF.text = dateFormatter.string(from: datePicker.date)
+            dateTFString = dateTF.text!
+            print("CreateStoryVC: dateTFString = \(dateTFString)")
+            print("CreateStoryVC: dateTF got the date from the datePicker - \(dateTF.text)")
         }
-        
+    
         dateTF.resignFirstResponder()
     }
     
@@ -86,15 +90,14 @@ final class CreateStoryVC: UIViewController {
         
     }
     
-    
     private func setupSaveButton() {
         saveButton.backgroundColor = .green
-        saveButton.addTarget(self, action: #selector(saveStory), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveEvent), for: .touchUpInside)
     }
     
     private func setupCancelButton() {
         cancelButton.backgroundColor = .blue
-        cancelButton.addTarget(self, action: #selector(cancelStory), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelEvent), for: .touchUpInside)
     }
     
     private func setupUI() {
@@ -116,7 +119,6 @@ final class CreateStoryVC: UIViewController {
             eventNameTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
             eventNameTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
             eventNameTF.heightAnchor.constraint(equalToConstant: 60),
-            
             
             dateLabel.topAnchor.constraint(equalTo: eventNameTF.bottomAnchor, constant: 20),
             dateLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20),
@@ -163,26 +165,31 @@ final class CreateStoryVC: UIViewController {
         
     }
     
-    @objc func saveStory() {
+    @objc func saveEvent() {
         
         //[Here should be the check for empty entities.]
         //[If the user hasn't picked the date or hasn't written the title the user should see the Alert before the save action is implemented.]
         
-        let eventDate = datePicker.date
-        print("Event date fetched successfuly: \(eventDate)")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        let dateFromString = dateFormatter.date(from: dateTFString)
+        print("CreateStoryVC. DATE was converted from the string 'dateTFString' - \(dateFromString)")
+        
+        let eventDate = dateFromString
+        print("Create StoryVC. Event DATE fetched successfuly: \(eventDate)")
      
         guard let titleText = eventNameTF.text else {
             return print("CreateStoryVC: titleTF has no instance")
         }
-        print("Event name fetched successfully: \(titleText)")
+        print("Create StoryVC. Event NAME fetched successfully: \(titleText)")
         
-        self.saveToDB(date: eventDate, title: titleText ?? "No title")
+        self.saveToDB(date: eventDate!, title: titleText ?? "No title")
         
         //[Navigation should be implemented like the move backword not like a pop-up.]
         self.navigationController?.pushViewController(MainView(), animated: true)
     }
     
-    @objc func cancelStory() {
+    @objc func cancelEvent() {
         print(">>>>Cancel button is tapped: Story being cancelled")
         self.navigationController?.pushViewController(MainView(), animated: true)
     }

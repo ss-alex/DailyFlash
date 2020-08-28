@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D90F4DE124F49B570084451D /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90F4DE024F49B570084451D /* DatabaseManager.swift */; };
 		D96DD7DB24DE2A5E00BF5471 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */; };
 		D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DD24DE2B4100BF5471 /* Helper.swift */; };
 		D96DD7E124DE2EDE00BF5471 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7E024DE2EDE00BF5471 /* CustomCell.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D90F4DE024F49B570084451D /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		D96DD7DD24DE2B4100BF5471 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		D96DD7E024DE2EDE00BF5471 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D90F4DDF24F49A3D0084451D /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				D90F4DE024F49B570084451D /* DatabaseManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		D96DD7D924DE2A2000BF5471 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +107,7 @@
 		D9E4051624CE999A00A90D0A /* DailyFlash */ = {
 			isa = PBXGroup;
 			children = (
+				D90F4DDF24F49A3D0084451D /* Manager */,
 				D96DD7E224E6AEF300BF5471 /* ViewController */,
 				D96DD7DF24DE2EC700BF5471 /* Cell */,
 				D96DD7DC24DE2AC000BF5471 /* Helper */,
@@ -188,6 +199,7 @@
 				D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */,
 				D9E4051824CE999A00A90D0A /* AppDelegate.swift in Sources */,
 				D9E4052F24CE9AF000A90D0A /* MainView.swift in Sources */,
+				D90F4DE124F49B570084451D /* DatabaseManager.swift in Sources */,
 				D9E4051A24CE999A00A90D0A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

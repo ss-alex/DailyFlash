@@ -86,7 +86,8 @@ class CustomCell: UITableViewCell {
     
     private func setupTimer() {
         timer = Timer.scheduledTimer(
-            timeInterval: 0.1,
+            //timeInterval: 0.1,
+            timeInterval: 10.0,
             target: self,
             selector: #selector(updateTime),
             userInfo: nil,
@@ -95,6 +96,7 @@ class CustomCell: UITableViewCell {
     }
     
     @objc func updateTime() {
+        //Current date
         let date = Date()
         let currentDateComponents = Calendar.current.dateComponents(
             [
@@ -107,32 +109,35 @@ class CustomCell: UITableViewCell {
         )
         let currentDate = Calendar.current.date(from: currentDateComponents)!
         
-        let fetchedDate = self.savedDate ?? Date.init(timeIntervalSince1970: .infinity)
-        let fetchedDateComponents = Calendar.current.dateComponents(
+        //Fetched date
+        let savedDate = self.savedDate ?? Date.init(timeIntervalSince1970: .infinity)
+        let savedDateComponents = Calendar.current.dateComponents(
             [.year,
              .month,
              .day,
              .hour,
              .minute,
              .second],
-            from: fetchedDate
+            from: savedDate
         )
         
+        // Event date
         var dateComponents = DateComponents()
-        dateComponents.year = fetchedDateComponents.year ?? 2020
-        dateComponents.month = fetchedDateComponents.month ?? 09
-        dateComponents.day = fetchedDateComponents.day ?? 01
-        dateComponents.hour = fetchedDateComponents.hour ?? 00
-        dateComponents.minute = fetchedDateComponents.minute ?? 00
-        dateComponents.second = fetchedDateComponents.second ?? 00
+        dateComponents.year = savedDateComponents.year ?? 2020
+        dateComponents.month = savedDateComponents.month ?? 09
+        dateComponents.day = savedDateComponents.day ?? 01
+        dateComponents.hour = savedDateComponents.hour ?? 00
+        dateComponents.minute = savedDateComponents.minute ?? 00
+        dateComponents.second = savedDateComponents.second ?? 00
         dateComponents.timeZone = TimeZone(abbreviation: "GMT")
         
         guard let eventDate = Calendar.current.date(from: dateComponents) else {
             return print("EventDate couldn't be initialized properly")
         }
         
-        print("Event date: \(eventDate)")
-        print("Current date: \(currentDate)")
+        print("CustomCell: saved date - \(savedDate)")
+        //print("Event date: \(eventDate)")
+        //print("Current date: \(currentDate)")
         
         let timeLeft = Calendar.current.dateComponents([
             .day,
@@ -142,7 +147,7 @@ class CustomCell: UITableViewCell {
             from: currentDate,
             to: eventDate)
         
-        if fetchedDate >= currentDate {
+        if savedDate >= currentDate {
             countdownLabel.text = "\(timeLeft.day!)d \(timeLeft.hour!)h \(timeLeft.minute!)m \(timeLeft.second!)s"
         } else {
             countdownLabel.text = "EXPIRED"

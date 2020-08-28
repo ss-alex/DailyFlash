@@ -151,6 +151,7 @@ extension MainView: UITableViewDataSource {
         
         let title = event.value(forKey: "title") as? String ?? "No title"
         let date = event.value(forKey: "date") as? Date ?? Date(timeIntervalSinceNow: .infinity)
+        print("MainView: Event date has been saved - \(date)")
         
         cell.set(title: title, savedEventDate: date)
         return cell
