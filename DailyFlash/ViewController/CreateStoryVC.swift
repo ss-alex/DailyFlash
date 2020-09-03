@@ -27,6 +27,8 @@ final class CreateStoryVC: UIViewController {
     
     override func viewDidLoad() {
         setupView()
+        
+        currentDate()
     }
     
     private func setupView() {
@@ -42,6 +44,15 @@ final class CreateStoryVC: UIViewController {
         setupUI()
     }
     
+    private func currentDate() {
+        let date = Date()
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = df.string(from: date)
+        
+        print("CreateStoryVC. Current date and time: \(dateString)")
+    }
+    
     private func setupEventNameLabel() {
         eventNameLabel.text = "Event name"
         eventNameLabel.textColor = .customWhiteTitle
@@ -50,8 +61,6 @@ final class CreateStoryVC: UIViewController {
     private func setupEventNameTF() {
         eventNameTF.backgroundColor = .customLightGray
         eventNameTF.layer.cornerRadius = 20
-        
-        //eventNameTF.delegate = self
     }
     
     private func setupDateLabel() {
@@ -68,14 +77,18 @@ final class CreateStoryVC: UIViewController {
     
     @objc func tappedDone() {
         if let datePicker = dateTF.inputView as? UIDatePicker {
+            
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
+            //dateFormatter.dateStyle = .medium
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            
             dateTF.text = dateFormatter.string(from: datePicker.date)
-            dateTFString = dateTF.text!
-            print("CreateStoryVC: dateTFString = \(dateTFString)")
             print("CreateStoryVC: dateTF got the date from the datePicker - \(dateTF.text)")
+            
+            dateTFString = dateTF.text!
+            print("CreateStoryVC: 'dateTFString' from 'dateTF.text' = \(dateTFString)")
         }
-    
+        
         dateTF.resignFirstResponder()
     }
     
@@ -169,13 +182,26 @@ final class CreateStoryVC: UIViewController {
         
         //[Here should be the check for empty entities.]
         //[If the user hasn't picked the date or hasn't written the title the user should see the Alert before the save action is implemented.]
+        //[Need to resolve dates issue, if I pick 30th of May, 29th of May will be saved for some reason.]
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy"
-        let dateFromString = dateFormatter.date(from: dateTFString)
-        print("CreateStoryVC. DATE was converted from the string 'dateTFString' - \(dateFromString)")
         
-        let eventDate = dateFromString
+        dateFormatter.dateFormat    = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        let dateFromString = dateFormatter.date(from: dateTFString)
+        
+        let sourceTimeZone = TimeZone(abbreviation: "GMT")
+        let localTimeZone = TimeZone.current
+        
+        let sourceOffset = sourceTimeZone?.secondsFromGMT(for: dateFromString!)
+        let destinationOffset = localTimeZone.secondsFromGMT(for: dateFromString!)
+        
+        let timeInterval: TimeInterval = Double(destinationOffset - sourceOffset!)
+        
+        let convertedDate = Date(timeInterval: timeInterval, since: dateFromString!)
+        print("CreateStoryVC. Converted date = \(convertedDate)")
+        
+        let eventDate = convertedDate
         print("Create StoryVC. Event DATE fetched successfuly: \(eventDate)")
      
         guard let titleText = eventNameTF.text else {
@@ -183,7 +209,7 @@ final class CreateStoryVC: UIViewController {
         }
         print("Create StoryVC. Event NAME fetched successfully: \(titleText)")
         
-        self.saveToDB(date: eventDate!, title: titleText ?? "No title")
+        self.saveToDB(date: eventDate, title: titleText ?? "No title")
         
         //[Navigation should be implemented like the move backword not like a pop-up.]
         self.navigationController?.pushViewController(MainView(), animated: true)

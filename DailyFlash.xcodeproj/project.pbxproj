@@ -11,6 +11,7 @@
 		D96DD7DB24DE2A5E00BF5471 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */; };
 		D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DD24DE2B4100BF5471 /* Helper.swift */; };
 		D96DD7E124DE2EDE00BF5471 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7E024DE2EDE00BF5471 /* CustomCell.swift */; };
+		D9AD364F24F8C3C000630918 /* String + DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AD364E24F8C3C000630918 /* String + DateFormatter.swift */; };
 		D9E4051824CE999A00A90D0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E4051724CE999A00A90D0A /* AppDelegate.swift */; };
 		D9E4051A24CE999A00A90D0A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E4051924CE999A00A90D0A /* SceneDelegate.swift */; };
 		D9E4052224CE999A00A90D0A /* DailyFlash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D9E4052024CE999A00A90D0A /* DailyFlash.xcdatamodeld */; };
@@ -25,6 +26,7 @@
 		D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		D96DD7DD24DE2B4100BF5471 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		D96DD7E024DE2EDE00BF5471 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		D9AD364E24F8C3C000630918 /* String + DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + DateFormatter.swift"; sourceTree = "<group>"; };
 		D9E4051424CE999A00A90D0A /* DailyFlash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyFlash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E4051724CE999A00A90D0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9E4051924CE999A00A90D0A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		D9AD364D24F8C36500630918 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D9AD364E24F8C3C000630918 /* String + DateFormatter.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		D9E4050B24CE999A00A90D0A = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +117,7 @@
 		D9E4051624CE999A00A90D0A /* DailyFlash */ = {
 			isa = PBXGroup;
 			children = (
+				D9AD364D24F8C36500630918 /* Extensions */,
 				D90F4DDF24F49A3D0084451D /* Manager */,
 				D96DD7E224E6AEF300BF5471 /* ViewController */,
 				D96DD7DF24DE2EC700BF5471 /* Cell */,
@@ -197,6 +208,7 @@
 				D96DD7E124DE2EDE00BF5471 /* CustomCell.swift in Sources */,
 				D9E4053224CE9B4200A90D0A /* CreateStoryVC.swift in Sources */,
 				D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */,
+				D9AD364F24F8C3C000630918 /* String + DateFormatter.swift in Sources */,
 				D9E4051824CE999A00A90D0A /* AppDelegate.swift in Sources */,
 				D9E4052F24CE9AF000A90D0A /* MainView.swift in Sources */,
 				D90F4DE124F49B570084451D /* DatabaseManager.swift in Sources */,
