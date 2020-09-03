@@ -9,9 +9,6 @@
 import UIKit
 import CoreData
 
-/*struct MyVariables {
-    //static var stories: [NSManagedObject] = []
-}*/
 
 var events: [NSManagedObject] = []
 
@@ -83,7 +80,6 @@ final class MainView: UIViewController {
         self.navigationController?.pushViewController(CreateStoryVC(), animated: true)
     }
     
-    
     private func setupModuleViews() {
         moduleViews = [moduleViewOne, moduleViewTwo, moduleViewThree, moduleViewFour]
         
@@ -134,6 +130,7 @@ final class MainView: UIViewController {
         
         do {
             events = try managedContext.fetch(fetchRequest)
+            print("MainView. Fetched managed objects from 'events': \(events)")
         } catch let error as NSError {
             print("MainView: couldn't fetch data from DB \(error)")
         }
@@ -151,7 +148,7 @@ extension MainView: UITableViewDataSource {
         
         let title = event.value(forKey: "title") as? String ?? "No title"
         let date = event.value(forKey: "date") as? Date ?? Date(timeIntervalSinceNow: .infinity)
-        print("MainView: Event date has been saved - \(date)")
+        print("MainView. Event date has been saved - \(date)")
         
         cell.set(title: title, savedEventDate: date)
         return cell

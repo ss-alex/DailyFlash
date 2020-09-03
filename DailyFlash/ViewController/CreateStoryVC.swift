@@ -183,6 +183,7 @@ final class CreateStoryVC: UIViewController {
         //[Here should be the check for empty entities.]
         //[If the user hasn't picked the date or hasn't written the title the user should see the Alert before the save action is implemented.]
         //[Need to resolve dates issue, if I pick 30th of May, 29th of May will be saved for some reason.]
+        //[Navigation should be implemented like the move backword not like a pop-up.]
         
         let dateFormatter = DateFormatter()
         
@@ -211,7 +212,6 @@ final class CreateStoryVC: UIViewController {
         
         self.saveToDB(date: eventDate, title: titleText ?? "No title")
         
-        //[Navigation should be implemented like the move backword not like a pop-up.]
         self.navigationController?.pushViewController(MainView(), animated: true)
     }
     

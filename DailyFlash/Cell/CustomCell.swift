@@ -54,7 +54,7 @@ class CustomCell: UITableViewCell {
         NSLayoutConstraint.activate([top, left, width, height])
         
         titleLabel.backgroundColor = .systemGray
-        titleLabel.text = "Andrew Birthday"
+        //titleLabel.text = "Andrew Birthday"
     }
     
     private func setupCountDownLabel() {
@@ -97,57 +97,26 @@ class CustomCell: UITableViewCell {
     
     @objc func updateTime() {
         //Current date
-        let date = Date()
-        let currentDateComponents = Calendar.current.dateComponents(
-            [
-                .year,
-                .month,
-                .day,
-                .hour,
-                .minute,
-                .second], from: date
-        )
-        let currentDate = Calendar.current.date(from: currentDateComponents)!
+        let date = Date() /// this date is the current date and time by GMT +0
         
-        //Fetched date
-        let savedDate = self.savedDate ?? Date.init(timeIntervalSince1970: .infinity)
-        let savedDateComponents = Calendar.current.dateComponents(
-            [.year,
-             .month,
-             .day,
-             .hour,
-             .minute,
-             .second],
-            from: savedDate
-        )
+        let sourceTimeZone = TimeZone(abbreviation: "GMT")
+        let localTimeZone = TimeZone.current
         
-        // Event date
-        var dateComponents = DateComponents()
-        dateComponents.year = savedDateComponents.year ?? 2020
-        dateComponents.month = savedDateComponents.month ?? 09
-        dateComponents.day = savedDateComponents.day ?? 01
-        dateComponents.hour = savedDateComponents.hour ?? 00
-        dateComponents.minute = savedDateComponents.minute ?? 00
-        dateComponents.second = savedDateComponents.second ?? 00
-        dateComponents.timeZone = TimeZone(abbreviation: "GMT")
+        let sourceOffset = (sourceTimeZone?.secondsFromGMT(for: date))!
+        let destinationOffset = localTimeZone.secondsFromGMT(for: date)
         
-        guard let eventDate = Calendar.current.date(from: dateComponents) else {
-            return print("EventDate couldn't be initialized properly")
-        }
-        
-        print("CustomCell: saved date - \(savedDate)")
-        //print("Event date: \(eventDate)")
-        //print("Current date: \(currentDate)")
+        let timeInterval: TimeInterval = Double(destinationOffset - sourceOffset)
+        let currentDateLocal = Date(timeInterval: timeInterval, since: date) /// this date is date converted to GMT +8
         
         let timeLeft = Calendar.current.dateComponents([
             .day,
             .hour,
             .minute,
             .second],
-            from: currentDate,
-            to: eventDate)
+            from: currentDateLocal,
+            to: savedDate)
         
-        if savedDate >= currentDate {
+            if savedDate >= currentDateLocal {
             countdownLabel.text = "\(timeLeft.day!)d \(timeLeft.hour!)h \(timeLeft.minute!)m \(timeLeft.second!)s"
         } else {
             countdownLabel.text = "EXPIRED"
