@@ -20,9 +20,17 @@ class CustomCell: UITableViewCell {
     
     var savedDate: Date!
     
+    var currentDate: Date!
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
+        
+        
+        //let endDate = savedDate!
+        
+        //let dif = daysBetween(startDate: currentDateLocal, endDate: endDate)
+        //print("CustomCell. Dif between dates - \(dif)")
     }
     
     required init?(coder: NSCoder) {
@@ -54,7 +62,6 @@ class CustomCell: UITableViewCell {
         NSLayoutConstraint.activate([top, left, width, height])
         
         titleLabel.backgroundColor = .systemGray
-        //titleLabel.text = "Andrew Birthday"
     }
     
     private func setupCountDownLabel() {
@@ -81,7 +88,38 @@ class CustomCell: UITableViewCell {
         NSLayoutConstraint.activate([yAnchor, right, width, height])
         
         indicatorImageView.layer.cornerRadius = customSize/2
-        indicatorImageView.backgroundColor = .systemRed
+        
+        DispatchQueue.main.async {
+            let currentDateLocal = self.convertDateToLocalDate()
+            let endDate = self.savedDate!
+            
+            let dif = self.daysBetween(startDate: currentDateLocal, endDate: endDate)
+            
+            self.indicatorImageView.backgroundColor = self.setupIndicatorColor(dif: dif, currentDateLocal: currentDateLocal)
+        }
+    }
+    
+    private func setupIndicatorColor(dif: Int, currentDateLocal: Date) -> UIColor {
+        
+        if currentDateLocal < savedDate && dif >= 30 {
+            return UIColor.systemGreen
+            
+        } else if currentDateLocal < savedDate && dif >= 7 && dif < 30 {
+            return UIColor.systemBlue
+            
+        } else if currentDateLocal < savedDate && dif >= 1 && dif < 7 {
+            return UIColor.systemYellow
+            
+        } else if currentDateLocal < savedDate && dif >= 0 && dif < 1 {
+            return UIColor.systemRed
+            
+        } else {
+            return UIColor.systemGray
+        }
+    }
+    
+    private func daysBetween(startDate: Date, endDate: Date) -> Int {
+        Calendar.current.dateComponents([.day], from: startDate, to: endDate).day!
     }
     
     private func setupTimer() {
@@ -96,17 +134,8 @@ class CustomCell: UITableViewCell {
     }
     
     @objc func updateTime() {
-        //Current date
-        let date = Date() /// this date is the current date and time by GMT +0
         
-        let sourceTimeZone = TimeZone(abbreviation: "GMT")
-        let localTimeZone = TimeZone.current
-        
-        let sourceOffset = (sourceTimeZone?.secondsFromGMT(for: date))!
-        let destinationOffset = localTimeZone.secondsFromGMT(for: date)
-        
-        let timeInterval: TimeInterval = Double(destinationOffset - sourceOffset)
-        let currentDateLocal = Date(timeInterval: timeInterval, since: date) /// this date is date converted to GMT +8
+        let currentDateLocal = convertDateToLocalDate()
         
         let timeLeft = Calendar.current.dateComponents([
             .day,
@@ -116,10 +145,26 @@ class CustomCell: UITableViewCell {
             from: currentDateLocal,
             to: savedDate)
         
-            if savedDate >= currentDateLocal {
+        if savedDate >= currentDateLocal {
             countdownLabel.text = "\(timeLeft.day!)d \(timeLeft.hour!)h \(timeLeft.minute!)m \(timeLeft.second!)s"
         } else {
             countdownLabel.text = "EXPIRED"
         }
+    }
+    
+    private func convertDateToLocalDate() -> Date  {
+        
+        let date = Date()
+        
+        let sourceTimeZone = TimeZone(abbreviation: "GMT")
+        let localTimeZone = TimeZone.current
+        
+        let sourceOffset = (sourceTimeZone?.secondsFromGMT(for: date))!
+        let destinationOffset = localTimeZone.secondsFromGMT(for: date)
+        
+        let timeInterval: TimeInterval = Double(destinationOffset - sourceOffset)
+        let currentDateLocal = Date(timeInterval: timeInterval, since: date)
+        
+        return currentDateLocal
     }
 }
