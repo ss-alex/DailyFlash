@@ -12,7 +12,7 @@ class CustomCell: UITableViewCell {
     
     private let titleLabel = UILabel()
     private let countdownLabel = UILabel()
-    private let indicatorImageView = UIImageView()
+    private let indicator = UIImageView()
     
     private let customSize: CGFloat = 14
     
@@ -25,12 +25,6 @@ class CustomCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
-        
-        
-        //let endDate = savedDate!
-        
-        //let dif = daysBetween(startDate: currentDateLocal, endDate: endDate)
-        //print("CustomCell. Dif between dates - \(dif)")
     }
     
     required init?(coder: NSCoder) {
@@ -78,24 +72,24 @@ class CustomCell: UITableViewCell {
     }
     
     private func setupIndicator() {
-        addSubview(indicatorImageView)
+        addSubview(indicator)
         
-        indicatorImageView.translatesAutoresizingMaskIntoConstraints = false
-        let yAnchor = indicatorImageView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
-        let right = indicatorImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10)
-        let width = indicatorImageView.widthAnchor.constraint(equalToConstant: customSize)
-        let height = indicatorImageView.heightAnchor.constraint(equalToConstant: customSize)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        let yAnchor = indicator.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
+        let right = indicator.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10)
+        let width = indicator.widthAnchor.constraint(equalToConstant: customSize)
+        let height = indicator.heightAnchor.constraint(equalToConstant: customSize)
         NSLayoutConstraint.activate([yAnchor, right, width, height])
         
-        indicatorImageView.layer.cornerRadius = customSize/2
+        indicator.layer.cornerRadius = customSize/2
         
         DispatchQueue.main.async {
-            let currentDateLocal = self.convertDateToLocalDate()
+            let currentDateLocal = Helper.convertDateToLocalDate()
             let endDate = self.savedDate!
             
-            let dif = self.daysBetween(startDate: currentDateLocal, endDate: endDate)
+            let dif = Helper.daysBetween(startDate: currentDateLocal, endDate: endDate)
             
-            self.indicatorImageView.backgroundColor = self.setupIndicatorColor(dif: dif, currentDateLocal: currentDateLocal)
+            self.indicator.backgroundColor = self.setupIndicatorColor(dif: dif, currentDateLocal: currentDateLocal)
         }
     }
     
@@ -118,10 +112,6 @@ class CustomCell: UITableViewCell {
         }
     }
     
-    private func daysBetween(startDate: Date, endDate: Date) -> Int {
-        Calendar.current.dateComponents([.day], from: startDate, to: endDate).day!
-    }
-    
     private func setupTimer() {
         timer = Timer.scheduledTimer(
             //timeInterval: 0.1,
@@ -135,7 +125,7 @@ class CustomCell: UITableViewCell {
     
     @objc func updateTime() {
         
-        let currentDateLocal = convertDateToLocalDate()
+        let currentDateLocal = Helper.convertDateToLocalDate()
         
         let timeLeft = Calendar.current.dateComponents([
             .day,
@@ -152,19 +142,4 @@ class CustomCell: UITableViewCell {
         }
     }
     
-    private func convertDateToLocalDate() -> Date  {
-        
-        let date = Date()
-        
-        let sourceTimeZone = TimeZone(abbreviation: "GMT")
-        let localTimeZone = TimeZone.current
-        
-        let sourceOffset = (sourceTimeZone?.secondsFromGMT(for: date))!
-        let destinationOffset = localTimeZone.secondsFromGMT(for: date)
-        
-        let timeInterval: TimeInterval = Double(destinationOffset - sourceOffset)
-        let currentDateLocal = Date(timeInterval: timeInterval, since: date)
-        
-        return currentDateLocal
-    }
 }

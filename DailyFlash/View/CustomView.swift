@@ -81,6 +81,5 @@ class CustomView: UIView {
         textLabel.backgroundColor = .white
         textLabel.textColor = UIColor(red: 184/255.0, green: 184/255.0, blue: 184/255.0, alpha: 1)
         textLabel.adjustsFontSizeToFitWidth = true
-        
     }
 }

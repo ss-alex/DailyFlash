@@ -86,7 +86,7 @@ final class CreateStoryVC: UIViewController {
             print("CreateStoryVC: dateTF got the date from the datePicker - \(dateTF.text)")
             
             dateTFString = dateTF.text!
-            print("CreateStoryVC: 'dateTFString' from 'dateTF.text' = \(dateTFString)")
+            print("CreateStoryVC: 'dateTFString' from 'dateTF.text' - \(dateTFString)")
         }
         
         dateTF.resignFirstResponder()

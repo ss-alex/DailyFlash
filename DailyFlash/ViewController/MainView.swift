@@ -12,43 +12,42 @@ import CoreData
 
 var events: [NSManagedObject] = []
 
+var eventsDatesArray: [NSDate] = []
+
 
 final class MainView: UIViewController {
     
     let actionButton = UIButton()
     
-    let moduleViewOne = CustomView(imgViewColor: .customGreen,
-                                   text: ModulesMessages.moreThanOneMonth,
-                                   number: 2)
-    let moduleViewTwo = CustomView(imgViewColor: .customBlue,
-                                   text: ModulesMessages.moreThanOneWeek,
-                                   number: 2)
-    let moduleViewThree = CustomView(imgViewColor: .customYellow,
-                                     text: ModulesMessages.lessThanOneWeek,
-                                     number: 2)
-    let moduleViewFour = CustomView(imgViewColor: .customRed,
-                                    text: ModulesMessages.lessThanOneDay,
-                                    number: 2)
+    var moduleViewOne = CustomView()
+    var moduleViewTwo = CustomView()
+    var moduleViewThree = CustomView()
+    var moduleViewFour = CustomView()
     
     var moduleViews: [UIView] = []
     
     let tableView = UITableView()
     
+    var greenEventsSum: Int = 0
+    var blueEventsSum: Int = 0
+    var yellowEventsSum: Int = 0
+    var redEventsSum: Int = 0
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        
         fetchDataFromDB()
+        configureModuleIndexes()
+        setupView()
     }
     
     private func setupView() {
         view.backgroundColor = UIColor(red: 30/255.0, green: 28/255.0, blue: 28/255.0, alpha: 1)
         
-        setupNavigation()
+        moduleViewsInit()
         
+        setupNavigation()
         setupActionButton()
         setupModuleViews()
         setupTableView()
@@ -81,6 +80,7 @@ final class MainView: UIViewController {
     }
     
     private func setupModuleViews() {
+        
         moduleViews = [moduleViewOne, moduleViewTwo, moduleViewThree, moduleViewFour]
         
         for moduleView in moduleViews {
@@ -119,6 +119,7 @@ final class MainView: UIViewController {
             tableView.reloadData()
         }
     
+    
     private func fetchDataFromDB() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -128,13 +129,84 @@ final class MainView: UIViewController {
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Story")
         
+        fetchRequest.returnsObjectsAsFaults = false
+        
         do {
-            events = try managedContext.fetch(fetchRequest)
+            let fetchResult = try managedContext.fetch(fetchRequest)
+            
+            events = fetchResult
             print("MainView. Fetched managed objects from 'events': \(events)")
+            
+            for data in fetchResult {
+                let dateResult = data.value(forKey: "date")
+                
+                eventsDatesArray.append(dateResult as! NSDate)
+                print("MainView. eventsDatesArray is populated - \(eventsDatesArray)")
+            }
+            
+            
         } catch let error as NSError {
             print("MainView: couldn't fetch data from DB \(error)")
         }
     }
+    
+    
+    private func configureModuleIndexes() {
+        let datesArray = eventsDatesArray
+        
+        for date in datesArray {
+
+                let currentDateLocal = Helper.convertDateToLocalDate()
+                let endDate = date
+                
+                let dif = Helper.daysBetween(startDate: currentDateLocal, endDate: endDate as Date)
+                
+                self.calculateIndexes(eventDate: endDate as Date, currentDateLocal: currentDateLocal, dif: dif)
+        }
+    }
+    
+    private func calculateIndexes(eventDate: Date, currentDateLocal: Date, dif: Int) {
+        
+        if currentDateLocal < eventDate && dif >= 30 {
+            greenEventsSum += 1
+            print("greenEventsSum calculation - \(greenEventsSum)")
+            
+        } else if currentDateLocal < eventDate && dif >= 7 && dif < 30 {
+            blueEventsSum += 1
+            print("blueEventsSum calculation - \(blueEventsSum)")
+            
+        } else if currentDateLocal < eventDate && dif >= 1 && dif < 7 {
+            yellowEventsSum += 1
+            print("yellowEventsSum calculation - \(yellowEventsSum)")
+            
+        } else if currentDateLocal < eventDate && dif >= 0 && dif < 1 {
+            redEventsSum += 1
+            print("redEventsSum calculation - \(redEventsSum)")
+            
+        } else {
+            print("This event is in gray zone = expired. Date - \(eventDate)")
+        }
+    }
+    
+    private func moduleViewsInit() {
+        
+            self.moduleViewOne = CustomView(imgViewColor: .customGreen,
+                                            text: ModulesMessages.moreThanOneMonth,
+                                            number: self.greenEventsSum)
+            
+            self.moduleViewTwo = CustomView(imgViewColor: .customBlue,
+                                            text: ModulesMessages.moreThanOneWeek,
+                                            number: self.blueEventsSum)
+            
+            self.moduleViewThree = CustomView(imgViewColor: .customYellow,
+                                              text: ModulesMessages.lessThanOneWeek,
+                                              number: self.yellowEventsSum)
+            
+            self.moduleViewFour = CustomView(imgViewColor: .customRed,
+                                             text: ModulesMessages.lessThanOneDay,
+                                             number: self.redEventsSum)
+    }
+    
 }
 
 extension MainView: UITableViewDataSource {
@@ -148,7 +220,6 @@ extension MainView: UITableViewDataSource {
         
         let title = event.value(forKey: "title") as? String ?? "No title"
         let date = event.value(forKey: "date") as? Date ?? Date(timeIntervalSinceNow: .infinity)
-        print("MainView. Event date has been saved - \(date)")
         
         cell.set(title: title, savedEventDate: date)
         return cell
