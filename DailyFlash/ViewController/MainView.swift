@@ -14,7 +14,6 @@ var events: [NSManagedObject] = []
 
 var eventsDatesArray: [NSDate] = []
 
-
 final class MainView: UIViewController {
     
     let actionButton = UIButton()
@@ -28,18 +27,24 @@ final class MainView: UIViewController {
     
     let tableView = UITableView()
     
-    var greenEventsSum: Int = 0
-    var blueEventsSum: Int = 0
-    var yellowEventsSum: Int = 0
-    var redEventsSum: Int = 0
+    var countGreenEvents: Int = 0
+    var countBlueEvents: Int = 0
+    var countYellowEvents: Int = 0
+    var countRedEvents: Int = 0
+    
+    var indicatorColor: UIColor = UIColor.purple
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         fetchDataFromDB()
         configureModuleIndexes()
         setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     private func setupView() {
@@ -52,6 +57,7 @@ final class MainView: UIViewController {
         setupModuleViews()
         setupTableView()
     }
+    
     
     private func setupNavigation() {
         self.navigationController?.navigationBar.isHidden = true
@@ -138,10 +144,14 @@ final class MainView: UIViewController {
             print("MainView. Fetched managed objects from 'events': \(events)")
             
             for data in fetchResult {
-                let dateResult = data.value(forKey: "date")
                 
-                eventsDatesArray.append(dateResult as! NSDate)
-                print("MainView. eventsDatesArray is populated - \(eventsDatesArray)")
+                if let dateResult = data.value(forKey: "date") {
+                    eventsDatesArray.append(dateResult as! NSDate)
+                    
+                    print("MainView. eventsDatesArray is populated - \(eventsDatesArray)")
+                } else {
+                    print("MainView. eventsDatesArray can't be populated because dateResult is nil")
+                }
             }
             
             
@@ -150,38 +160,41 @@ final class MainView: UIViewController {
         }
     }
     
-    
     private func configureModuleIndexes() {
         let datesArray = eventsDatesArray
         
-        for date in datesArray {
-
+        if datesArray.isEmpty == false {
+        
+            for date in datesArray {
                 let currentDateLocal = Helper.convertDateToLocalDate()
                 let endDate = date
-                
                 let dif = Helper.daysBetween(startDate: currentDateLocal, endDate: endDate as Date)
-                
-                self.calculateIndexes(eventDate: endDate as Date, currentDateLocal: currentDateLocal, dif: dif)
+                    
+                self.countIndexes(eventDate: endDate as Date, currentDateLocal: currentDateLocal, dif: dif)
+            }
+            
+        } else {
+            print("MainView. datesArray IS EMPTY. No possible to work through dates.")
         }
     }
     
-    private func calculateIndexes(eventDate: Date, currentDateLocal: Date, dif: Int) {
+    private func countIndexes(eventDate: Date, currentDateLocal: Date, dif: Int) {
         
         if currentDateLocal < eventDate && dif >= 30 {
-            greenEventsSum += 1
-            print("greenEventsSum calculation - \(greenEventsSum)")
+            countGreenEvents += 1
+            print("countGreenEvents calculation - \(countGreenEvents)")
             
         } else if currentDateLocal < eventDate && dif >= 7 && dif < 30 {
-            blueEventsSum += 1
-            print("blueEventsSum calculation - \(blueEventsSum)")
+            countBlueEvents += 1
+            print("countBlueEvents calculation - \(countBlueEvents)")
             
         } else if currentDateLocal < eventDate && dif >= 1 && dif < 7 {
-            yellowEventsSum += 1
-            print("yellowEventsSum calculation - \(yellowEventsSum)")
+            countYellowEvents += 1
+            print("countYellowEvents calculation - \(countYellowEvents)")
             
         } else if currentDateLocal < eventDate && dif >= 0 && dif < 1 {
-            redEventsSum += 1
-            print("redEventsSum calculation - \(redEventsSum)")
+            countRedEvents += 1
+            print("countRedEvents calculation - \(countRedEvents)")
             
         } else {
             print("This event is in gray zone = expired. Date - \(eventDate)")
@@ -192,19 +205,19 @@ final class MainView: UIViewController {
         
             self.moduleViewOne = CustomView(imgViewColor: .customGreen,
                                             text: ModulesMessages.moreThanOneMonth,
-                                            number: self.greenEventsSum)
+                                            number: countGreenEvents)
             
             self.moduleViewTwo = CustomView(imgViewColor: .customBlue,
                                             text: ModulesMessages.moreThanOneWeek,
-                                            number: self.blueEventsSum)
+                                            number: countBlueEvents)
             
             self.moduleViewThree = CustomView(imgViewColor: .customYellow,
                                               text: ModulesMessages.lessThanOneWeek,
-                                              number: self.yellowEventsSum)
+                                              number: countYellowEvents)
             
             self.moduleViewFour = CustomView(imgViewColor: .customRed,
                                              text: ModulesMessages.lessThanOneDay,
-                                             number: self.redEventsSum)
+                                             number: countRedEvents)
     }
     
 }
@@ -221,7 +234,33 @@ extension MainView: UITableViewDataSource {
         let title = event.value(forKey: "title") as? String ?? "No title"
         let date = event.value(forKey: "date") as? Date ?? Date(timeIntervalSinceNow: .infinity)
         
-        cell.set(title: title, savedEventDate: date)
+    
+        let currentDateLocal = Helper.convertDateToLocalDate()
+        let endDate = date
+        let dif = Helper.daysBetween(startDate: currentDateLocal, endDate: endDate)
+            
+            
+            
+            //self.indicator.backgroundColor = self.setupIndicatorColor(dif: dif, currentDateLocal: currentDateLocal)
+        
+        if currentDateLocal < endDate && dif >= 30 {
+            indicatorColor = UIColor.systemGreen
+                
+        } else if currentDateLocal < endDate && dif >= 7 && dif < 30 {
+            indicatorColor = UIColor.systemBlue
+                
+        } else if currentDateLocal < endDate && dif >= 1 && dif < 7 {
+            indicatorColor = UIColor.systemYellow
+                
+        } else if currentDateLocal < endDate && dif >= 0 && dif < 1 {
+            indicatorColor = UIColor.systemRed
+                
+        } else {
+            indicatorColor = UIColor.systemGray
+        }
+        
+        cell.set(title: title, savedEventDate: date, color: indicatorColor)
+        
         return cell
     }
 }
@@ -254,13 +293,10 @@ extension MainView: UITableViewDelegate {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let managedContext = appDelegate.persistentContainer.viewContext
-        
         let event = events[indexPath.row]
         
         managedContext.delete(event)
-        
         events.remove(at: indexPath.row)
-        
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
     
@@ -269,3 +305,4 @@ extension MainView: UITableViewDelegate {
     }
     
 }
+

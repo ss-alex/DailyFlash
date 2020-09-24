@@ -32,9 +32,10 @@ class CustomCell: UITableViewCell {
     }
     
      //MARK:- Public
-    func set(title: String, savedEventDate: Date) {
+    func set(title: String, savedEventDate: Date, color: UIColor) {
         self.titleLabel.text = title
         self.savedDate = savedEventDate
+        self.indicator.backgroundColor = color
     }
     
     private func setup() {
@@ -83,14 +84,14 @@ class CustomCell: UITableViewCell {
         
         indicator.layer.cornerRadius = customSize/2
         
-        DispatchQueue.main.async {
+        /*DispatchQueue.main.async {
             let currentDateLocal = Helper.convertDateToLocalDate()
             let endDate = self.savedDate!
             
             let dif = Helper.daysBetween(startDate: currentDateLocal, endDate: endDate)
             
             self.indicator.backgroundColor = self.setupIndicatorColor(dif: dif, currentDateLocal: currentDateLocal)
-        }
+        }*/
     }
     
     private func setupIndicatorColor(dif: Int, currentDateLocal: Date) -> UIColor {

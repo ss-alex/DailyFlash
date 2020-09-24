@@ -212,12 +212,14 @@ final class CreateStoryVC: UIViewController {
         
         self.saveToDB(date: eventDate, title: titleText ?? "No title")
         
-        self.navigationController?.pushViewController(MainView(), animated: true)
+        print(">>>>Save button is tapped: Story being saved")
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func cancelEvent() {
+        
         print(">>>>Cancel button is tapped: Story being cancelled")
-        self.navigationController?.pushViewController(MainView(), animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
 }
