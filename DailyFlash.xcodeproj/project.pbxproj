@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D92EF6D825259F110099D73B /* CreateEventButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92EF6D725259F110099D73B /* CreateEventButton.swift */; };
+		D95BD32E2522E30D00D153AE /* CustomCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95BD32D2522E30D00D153AE /* CustomCellOne.swift */; };
 		D96DD7DB24DE2A5E00BF5471 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */; };
 		D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DD24DE2B4100BF5471 /* Helper.swift */; };
-		D96DD7E124DE2EDE00BF5471 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7E024DE2EDE00BF5471 /* CustomCell.swift */; };
+		D96DD7E124DE2EDE00BF5471 /* CustomCellTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7E024DE2EDE00BF5471 /* CustomCellTwo.swift */; };
 		D9AD364F24F8C3C000630918 /* String + DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AD364E24F8C3C000630918 /* String + DateFormatter.swift */; };
 		D9B0662C25130CB4001EF2FA /* TextField + DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B0662B25130CB4001EF2FA /* TextField + DatePicker.swift */; };
 		D9B0662E25130D41001EF2FA /* UIColor + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B0662D25130D41001EF2FA /* UIColor + Ext.swift */; };
@@ -23,9 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D92EF6D725259F110099D73B /* CreateEventButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventButton.swift; sourceTree = "<group>"; };
+		D95BD32D2522E30D00D153AE /* CustomCellOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellOne.swift; sourceTree = "<group>"; };
 		D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		D96DD7DD24DE2B4100BF5471 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		D96DD7E024DE2EDE00BF5471 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		D96DD7E024DE2EDE00BF5471 /* CustomCellTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellTwo.swift; sourceTree = "<group>"; };
 		D9AD364E24F8C3C000630918 /* String + DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + DateFormatter.swift"; sourceTree = "<group>"; };
 		D9B0662B25130CB4001EF2FA /* TextField + DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField + DatePicker.swift"; sourceTree = "<group>"; };
 		D9B0662D25130D41001EF2FA /* UIColor + Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Ext.swift"; sourceTree = "<group>"; };
@@ -51,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D92EF6D625259EC30099D73B /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				D92EF6D725259F110099D73B /* CreateEventButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		D96DD7D924DE2A2000BF5471 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -70,7 +82,8 @@
 		D96DD7DF24DE2EC700BF5471 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				D96DD7E024DE2EDE00BF5471 /* CustomCell.swift */,
+				D95BD32D2522E30D00D153AE /* CustomCellOne.swift */,
+				D96DD7E024DE2EDE00BF5471 /* CustomCellTwo.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -118,6 +131,7 @@
 				D96DD7E224E6AEF300BF5471 /* ViewController */,
 				D96DD7DF24DE2EC700BF5471 /* Cell */,
 				D96DD7D924DE2A2000BF5471 /* View */,
+				D92EF6D625259EC30099D73B /* Buttons */,
 				D9E4051724CE999A00A90D0A /* AppDelegate.swift */,
 				D9E4051924CE999A00A90D0A /* SceneDelegate.swift */,
 				D9E4052324CE999E00A90D0A /* Assets.xcassets */,
@@ -200,7 +214,7 @@
 			files = (
 				D9E4052224CE999A00A90D0A /* DailyFlash.xcdatamodeld in Sources */,
 				D96DD7DB24DE2A5E00BF5471 /* CustomView.swift in Sources */,
-				D96DD7E124DE2EDE00BF5471 /* CustomCell.swift in Sources */,
+				D96DD7E124DE2EDE00BF5471 /* CustomCellTwo.swift in Sources */,
 				D9E4053224CE9B4200A90D0A /* CreateStoryVC.swift in Sources */,
 				D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */,
 				D9AD364F24F8C3C000630918 /* String + DateFormatter.swift in Sources */,
@@ -209,6 +223,8 @@
 				D9B0662C25130CB4001EF2FA /* TextField + DatePicker.swift in Sources */,
 				D9E4052F24CE9AF000A90D0A /* MainView.swift in Sources */,
 				D9E4051A24CE999A00A90D0A /* SceneDelegate.swift in Sources */,
+				D95BD32E2522E30D00D153AE /* CustomCellOne.swift in Sources */,
+				D92EF6D825259F110099D73B /* CreateEventButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

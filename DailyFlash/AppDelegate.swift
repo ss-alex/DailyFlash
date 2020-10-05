@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  DailyFlash
 //
-//  Created by Лена Мырленко on 2020/7/27.
+//  Created by Alexey Kirpichnikov on 2020/7/27.
 //  Copyright © 2020 Alexey Kirpichnikov. All rights reserved.
 //
 
