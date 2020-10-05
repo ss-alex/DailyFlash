@@ -28,6 +28,24 @@ class Helper {
     static func daysBetween(startDate: Date, endDate: Date) -> Int {
         Calendar.current.dateComponents([.day], from: startDate, to: endDate).day!
     }
+    
+    static func defineColor(currentDateLocal: Date, endDate: Date, dif: Int) -> UIColor {
+        if currentDateLocal < endDate && dif >= 30 {
+            return UIColor.systemGreen
+                
+        } else if currentDateLocal < endDate && dif >= 7 && dif < 30 {
+            return UIColor.systemBlue
+                
+        } else if currentDateLocal < endDate && dif >= 1 && dif < 7 {
+            return UIColor.systemYellow
+                
+        } else if currentDateLocal < endDate && dif >= 0 && dif < 1 {
+            return UIColor.systemRed
+                
+        } else {
+            return UIColor.systemGray
+        }
+    }
 }
 
 
