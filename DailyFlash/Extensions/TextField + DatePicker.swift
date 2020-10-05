@@ -2,7 +2,7 @@
 //  TextField + DatePicker.swift
 //  DailyFlash
 //
-//  Created by Alexey Kirpichnikov on 2020/9/17.
+//  Created by Лена Мырленко on 2020/9/17.
 //  Copyright © 2020 Alexey Kirpichnikov. All rights reserved.
 //
 

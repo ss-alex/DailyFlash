@@ -2,7 +2,7 @@
 //  String + DateFormatter.swift
 //  DailyFlash
 //
-//  Created by Alexey Kirpichnikov on 2020/8/28.
+//  Created by Лена Мырленко on 2020/8/28.
 //  Copyright © 2020 Alexey Kirpichnikov. All rights reserved.
 //
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomCellTwo: UITableViewCell {
+class CustomCell: UITableViewCell {
     
     private let titleLabel = UILabel()
     private let countdownLabel = UILabel()
@@ -83,6 +83,34 @@ class CustomCellTwo: UITableViewCell {
         NSLayoutConstraint.activate([yAnchor, right, width, height])
         
         indicator.layer.cornerRadius = customSize/2
+        
+        /*DispatchQueue.main.async {
+            let currentDateLocal = Helper.convertDateToLocalDate()
+            let endDate = self.savedDate!
+            
+            let dif = Helper.daysBetween(startDate: currentDateLocal, endDate: endDate)
+            
+            self.indicator.backgroundColor = self.setupIndicatorColor(dif: dif, currentDateLocal: currentDateLocal)
+        }*/
+    }
+    
+    private func setupIndicatorColor(dif: Int, currentDateLocal: Date) -> UIColor {
+        
+        if currentDateLocal < savedDate && dif >= 30 {
+            return UIColor.systemGreen
+            
+        } else if currentDateLocal < savedDate && dif >= 7 && dif < 30 {
+            return UIColor.systemBlue
+            
+        } else if currentDateLocal < savedDate && dif >= 1 && dif < 7 {
+            return UIColor.systemYellow
+            
+        } else if currentDateLocal < savedDate && dif >= 0 && dif < 1 {
+            return UIColor.systemRed
+            
+        } else {
+            return UIColor.systemGray
+        }
     }
     
     private func setupTimer() {
@@ -110,7 +138,6 @@ class CustomCellTwo: UITableViewCell {
         
         if savedDate >= currentDateLocal {
             countdownLabel.text = "\(timeLeft.day!)d \(timeLeft.hour!)h \(timeLeft.minute!)m \(timeLeft.second!)s"
-            
         } else {
             countdownLabel.text = "EXPIRED"
         }

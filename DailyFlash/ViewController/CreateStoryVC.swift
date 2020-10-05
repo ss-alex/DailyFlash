@@ -49,6 +49,8 @@ final class CreateStoryVC: UIViewController {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = df.string(from: date)
+        
+        print("CreateStoryVC. Current date and time: \(dateString)")
     }
     
     private func setupEventNameLabel() {
@@ -77,11 +79,14 @@ final class CreateStoryVC: UIViewController {
         if let datePicker = dateTF.inputView as? UIDatePicker {
             
             let dateFormatter = DateFormatter()
+            //dateFormatter.dateStyle = .medium
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             
             dateTF.text = dateFormatter.string(from: datePicker.date)
+            print("CreateStoryVC: dateTF got the date from the datePicker - \(dateTF.text)")
             
             dateTFString = dateTF.text!
+            print("CreateStoryVC: 'dateTFString' from 'dateTF.text' - \(dateTFString)")
         }
         
         dateTF.resignFirstResponder()
@@ -166,7 +171,7 @@ final class CreateStoryVC: UIViewController {
         
         do {
             try managedContext.save()
-            eventsArray.append(story)
+            events.append(story)
         } catch let error as NSError {
             print("CreateStoryVC: Couldn't save. \(error), \(error.userInfo)")
         }
@@ -195,18 +200,25 @@ final class CreateStoryVC: UIViewController {
         let timeInterval: TimeInterval = Double(destinationOffset - sourceOffset!)
         
         let convertedDate = Date(timeInterval: timeInterval, since: dateFromString!)
+        print("CreateStoryVC. Converted date = \(convertedDate)")
+        
         let eventDate = convertedDate
+        print("Create StoryVC. Event DATE fetched successfuly: \(eventDate)")
      
         guard let titleText = eventNameTF.text else {
             return print("CreateStoryVC: titleTF has no instance")
         }
+        print("Create StoryVC. Event NAME fetched successfully: \(titleText)")
         
         self.saveToDB(date: eventDate, title: titleText ?? "No title")
         
-        self.navigationController?.pushViewController(MainView(), animated: true)
+        print(">>>>Save button is tapped: Story being saved")
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func cancelEvent() {
+        
+        print(">>>>Cancel button is tapped: Story being cancelled")
         self.navigationController?.popViewController(animated: true)
     }
     
