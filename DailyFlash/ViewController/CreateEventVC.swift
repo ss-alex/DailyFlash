@@ -11,11 +11,11 @@ import CoreData
 
 final class CreateStoryVC: UIViewController {
     
-    let eventNameLabel = UILabel()
-    var eventNameTF = UITextField()
+    let eventNameLabel = CustomLabel(textColor: .customWhiteTitle, text: "Event name")
+    var eventNameTF = CustomTF()
     
-    let dateLabel = UILabel()
-    let dateTF = UITextField()
+    let dateLabel = CustomLabel(textColor: .customWhiteTitle, text: "Date")
+    let dateTF = CustomTF()
     var dateTFString: String = ""
     
     let datePicker = UIDatePicker()
@@ -27,49 +27,20 @@ final class CreateStoryVC: UIViewController {
     
     override func viewDidLoad() {
         setupView()
-        
-        currentDate()
     }
     
     private func setupView() {
-        setupEventNameLabel()
-        setupEventNameTF()
-        
-        setupDateLabel()
         setupDateTF()
-        
         setupSaveButton()
         setupCancelButton()
         
-        setupUI()
+        setupLayout()
     }
     
-    private func currentDate() {
-        let date = Date()
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = df.string(from: date)
-    }
+    //MARK:- Logic
     
-    private func setupEventNameLabel() {
-        eventNameLabel.text = "Event name"
-        eventNameLabel.textColor = .customWhiteTitle
-    }
-    
-    private func setupEventNameTF() {
-        eventNameTF.backgroundColor = .customLightGray
-        eventNameTF.layer.cornerRadius = 20
-    }
-    
-    private func setupDateLabel() {
-        dateLabel.text = "Date"
-        dateLabel.textColor = .customWhiteTitle
-    }
     
     private func setupDateTF() {
-        dateTF.backgroundColor = .customLightGray
-        dateTF.layer.cornerRadius = 20
-        
         dateTF.setupInputViewDatePicker(target: self, selector: #selector(tappedDone))
     }
     
@@ -80,27 +51,28 @@ final class CreateStoryVC: UIViewController {
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             
             dateTF.text = dateFormatter.string(from: datePicker.date)
-            
             dateTFString = dateTF.text!
         }
         
         dateTF.resignFirstResponder()
     }
     
-    private func setupDatePicker() {
-        datePicker.datePickerMode = .date
-        let currentDate = Date()
-        datePicker.minimumDate = currentDate
-        
-        datePicker.setValue(UIColor.customWhiteTitle, forKey: "textColor")
-        datePicker.subviews[0].subviews[1].backgroundColor = .customWhiteTitle
-        datePicker.subviews[0].subviews[2].backgroundColor = .customWhiteTitle
-        
-    }
     
     private func setupSaveButton() {
         saveButton.backgroundColor = .green
         saveButton.addTarget(self, action: #selector(saveEvent), for: .touchUpInside)
+    }
+    
+    @objc func saveEvent() {
+        
+        let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: dateTFString)
+        
+        guard let titleText = eventNameTF.text else {
+            return print("titleTF has no instance")
+        }
+        
+        Helper.saveToDB(date: convertedDate, title: titleText ?? "No title")
+        self.navigationController?.pushViewController(MainView(), animated: true)
     }
     
     private func setupCancelButton() {
@@ -108,7 +80,12 @@ final class CreateStoryVC: UIViewController {
         cancelButton.addTarget(self, action: #selector(cancelEvent), for: .touchUpInside)
     }
     
-    private func setupUI() {
+    @objc func cancelEvent() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK:- UI Elements
+    private func setupLayout() {
         
         layoutElements = [eventNameLabel, eventNameTF, dateLabel, dateTF, saveButton, cancelButton]
         
@@ -148,66 +125,6 @@ final class CreateStoryVC: UIViewController {
             cancelButton.widthAnchor.constraint(equalToConstant: (view.frame.width/2) - 30),
             cancelButton.heightAnchor.constraint(equalToConstant: 60)
         ])
-    }
-    
-    private func saveToDB(date: Date, title: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "Story", in: managedContext)!
-        
-        let story = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        story.setValue(title, forKey: "title")
-        story.setValue(date, forKey: "date")
-        
-        do {
-            try managedContext.save()
-            eventsArray.append(story)
-        } catch let error as NSError {
-            print("CreateStoryVC: Couldn't save. \(error), \(error.userInfo)")
-        }
-        
-    }
-    
-    @objc func saveEvent() {
-        
-        //[Here should be the check for empty entities.]
-        //[If the user hasn't picked the date or hasn't written the title the user should see the Alert before the save action is implemented.]
-        //[Need to resolve dates issue, if I pick 30th of May, 29th of May will be saved for some reason.]
-        //[Navigation should be implemented like the move backword not like a pop-up.]
-        
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat    = "yyyy-MM-dd'T'HH:mm:ssZ"
-        
-        let dateFromString = dateFormatter.date(from: dateTFString)
-        
-        let sourceTimeZone = TimeZone(abbreviation: "GMT")
-        let localTimeZone = TimeZone.current
-        
-        let sourceOffset = sourceTimeZone?.secondsFromGMT(for: dateFromString!)
-        let destinationOffset = localTimeZone.secondsFromGMT(for: dateFromString!)
-        
-        let timeInterval: TimeInterval = Double(destinationOffset - sourceOffset!)
-        
-        let convertedDate = Date(timeInterval: timeInterval, since: dateFromString!)
-        let eventDate = convertedDate
-     
-        guard let titleText = eventNameTF.text else {
-            return print("CreateStoryVC: titleTF has no instance")
-        }
-        
-        self.saveToDB(date: eventDate, title: titleText ?? "No title")
-        
-        self.navigationController?.pushViewController(MainView(), animated: true)
-    }
-    
-    @objc func cancelEvent() {
-        self.navigationController?.popViewController(animated: true)
     }
     
 }

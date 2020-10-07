@@ -284,6 +284,9 @@ extension MainView: UITableViewDelegate {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
             self.deleteData(at: indexPath)
+            
+            //print("MainView. indexPath - \(indexPath.row)")
+            //var indexPathRow = indexPath.row
         }
         
         let editAction = UIContextualAction(style: .destructive, title: "Edit") { (contextualAction, view, boolValue) in
@@ -315,7 +318,7 @@ extension MainView: UITableViewDelegate {
         eventsArray.remove(at: indexPath.row)
         lowerTableView.deleteRows(at: [indexPath], with: .fade)
         
-        //launching the logic again
+        //launching the logic again..
         setupLogic()
         upperTableView.reloadData()
     }
