@@ -9,13 +9,13 @@
 import UIKit
 import CoreData
 
-final class CreateStoryVC: UIViewController {
+final class CreateEventVC: UIViewController {
     
     let eventNameLabel = CustomLabel(textColor: .customWhiteTitle, text: "Event name")
     var eventNameTF = CustomTF()
     
     let dateLabel = CustomLabel(textColor: .customWhiteTitle, text: "Date")
-    let dateTF = CustomTF()
+    var dateTF = CustomTF()
     var dateTFString: String = ""
     
     let datePicker = UIDatePicker()
@@ -25,8 +25,34 @@ final class CreateStoryVC: UIViewController {
     
     var layoutElements: [UIView] = []
     
+    var editFlag: Bool = false
+    var editEventName: String = ""
+    var editEventDate: String = ""
+    var editIndex: Int = 0
+    
+    var delegate: DataDelegate?
+    
+    init(editFlag: Bool) {
+        self.editFlag = editFlag
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if editFlag == true {
+            eventNameTF.text = editEventName
+            dateTF.text = editEventDate
+        } else {
+            eventNameTF.text = PlaceholderText.nameTheEvent
+            dateTF.text = PlaceholderText.pickTheDate
+        }
     }
     
     private func setupView() {
@@ -39,19 +65,28 @@ final class CreateStoryVC: UIViewController {
     
     //MARK:- Logic
     
+    private func setupEventNameTF() {
+        
+    }
     
     private func setupDateTF() {
         dateTF.setupInputViewDatePicker(target: self, selector: #selector(tappedDone))
     }
     
     @objc func tappedDone() {
-        if let datePicker = dateTF.inputView as? UIDatePicker {
+        if editFlag == true {
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            if let datePicker = dateTF.inputView as? UIDatePicker {
+                dateTF.text = Helper.convertDateToString(date: datePicker.date)
+                editEventDate = dateTF.text!
+            }
             
-            dateTF.text = dateFormatter.string(from: datePicker.date)
-            dateTFString = dateTF.text!
+        } else {
+            
+            if let datePicker = dateTF.inputView as? UIDatePicker {
+                dateTF.text = Helper.convertDateToString(date: datePicker.date)
+                dateTFString = dateTF.text!
+            }
         }
         
         dateTF.resignFirstResponder()
@@ -64,15 +99,30 @@ final class CreateStoryVC: UIViewController {
     }
     
     @objc func saveEvent() {
-        
-        let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: dateTFString)
-        
-        guard let titleText = eventNameTF.text else {
-            return print("titleTF has no instance")
+        if editFlag == true {
+
+            guard let editName = eventNameTF.text else {
+                return print("CreateEventVC, saveEvent(), editName is empty - \(String(describing: eventNameTF.text)) ")
+            }
+            
+            let editConvertedDate = Helper.convertDateInLocalTimeZone(dateTFString: editEventDate)
+            
+            Helper.editToDB(editIndex: editIndex, editName: editName, editDate: editConvertedDate)
+            
+            self.editFlag = false
+            self.navigationController?.pushViewController(MainView(), animated: true)
+            
+        } else {
+            
+            let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: dateTFString)
+            
+            guard let titleText = eventNameTF.text else {
+                return print("titleTF has no instance")
+            }
+            
+            Helper.saveToDB(date: convertedDate, title: titleText ?? "No title")
+            self.navigationController?.pushViewController(MainView(), animated: true)
         }
-        
-        Helper.saveToDB(date: convertedDate, title: titleText ?? "No title")
-        self.navigationController?.pushViewController(MainView(), animated: true)
     }
     
     private func setupCancelButton() {
@@ -81,6 +131,7 @@ final class CreateStoryVC: UIViewController {
     }
     
     @objc func cancelEvent() {
+        self.editFlag = false
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -129,7 +180,7 @@ final class CreateStoryVC: UIViewController {
     
 }
 
-extension CreateStoryVC: UITextFieldDelegate {
+extension CreateEventVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
     }

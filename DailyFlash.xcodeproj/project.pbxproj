@@ -10,6 +10,7 @@
 		D92EF6D825259F110099D73B /* CreateEventButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92EF6D725259F110099D73B /* CreateEventButton.swift */; };
 		D947FB57252D770400C7AE3C /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D947FB56252D770400C7AE3C /* CustomLabel.swift */; };
 		D947FB5A252D7AFE00C7AE3C /* CustomTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = D947FB59252D7AFE00C7AE3C /* CustomTF.swift */; };
+		D9525493252EC58500B19F75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9525492252EC58500B19F75 /* Constants.swift */; };
 		D95BD32E2522E30D00D153AE /* CustomCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95BD32D2522E30D00D153AE /* CustomCellOne.swift */; };
 		D96DD7DB24DE2A5E00BF5471 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */; };
 		D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DD24DE2B4100BF5471 /* Helper.swift */; };
@@ -30,6 +31,7 @@
 		D92EF6D725259F110099D73B /* CreateEventButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventButton.swift; sourceTree = "<group>"; };
 		D947FB56252D770400C7AE3C /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		D947FB59252D7AFE00C7AE3C /* CustomTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTF.swift; sourceTree = "<group>"; };
+		D9525492252EC58500B19F75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D95BD32D2522E30D00D153AE /* CustomCellOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellOne.swift; sourceTree = "<group>"; };
 		D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		D96DD7DD24DE2B4100BF5471 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -81,6 +83,14 @@
 				D947FB59252D7AFE00C7AE3C /* CustomTF.swift */,
 			);
 			path = TextField;
+			sourceTree = "<group>";
+		};
+		D9525491252EC56900B19F75 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				D9525492252EC58500B19F75 /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		D96DD7D924DE2A2000BF5471 /* View */ = {
@@ -146,6 +156,7 @@
 		D9E4051624CE999A00A90D0A /* DailyFlash */ = {
 			isa = PBXGroup;
 			children = (
+				D9525491252EC56900B19F75 /* Constants */,
 				D96DD7DC24DE2AC000BF5471 /* Helper */,
 				D9AD364D24F8C36500630918 /* Extensions */,
 				D96DD7E224E6AEF300BF5471 /* ViewController */,
@@ -241,6 +252,7 @@
 				D9E4053224CE9B4200A90D0A /* CreateEventVC.swift in Sources */,
 				D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */,
 				D9AD364F24F8C3C000630918 /* String + DateFormatter.swift in Sources */,
+				D9525493252EC58500B19F75 /* Constants.swift in Sources */,
 				D9E4051824CE999A00A90D0A /* AppDelegate.swift in Sources */,
 				D9B0662E25130D41001EF2FA /* UIColor + Ext.swift in Sources */,
 				D9B0662C25130CB4001EF2FA /* TextField + DatePicker.swift in Sources */,

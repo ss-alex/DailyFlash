@@ -9,12 +9,13 @@
 import UIKit
 import CoreData
 
+protocol DataDelegate {}
 
 var eventsArray: [NSManagedObject] = []
-
 var eventDatesArray: [NSDate] = []
 
-final class MainView: UIViewController {
+
+final class MainView: UIViewController, DataDelegate {
     
     let actionButton = CreateEventButton()
     
@@ -201,7 +202,7 @@ final class MainView: UIViewController {
     
     //MARK:- OBJC Methods
     @objc private func createEvent() {
-        self.navigationController?.pushViewController(CreateStoryVC(), animated: true)
+        self.navigationController?.pushViewController(CreateEventVC(editFlag: false), animated: true)
     }
 }
 
@@ -324,7 +325,17 @@ extension MainView: UITableViewDelegate {
     }
     
     func editData(at indexPath: IndexPath) {
-        print(indexPath.row)
+        let event = eventsArray[indexPath.row]
+        let title = event.value(forKey: "title") as? String ?? "No title"
+        let date = event.value(forKey: "date") as? Date ?? Date(timeIntervalSinceNow: .infinity)
+        
+        let vc = CreateEventVC(editFlag: true)
+        vc.delegate = self
+        vc.editEventName = title
+        vc.editEventDate = Helper.convertDateToString(date: date)
+        vc.editIndex = indexPath.row
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

@@ -70,6 +70,36 @@ class Helper {
         }
     }
     
+    static func editToDB(editIndex: Int, editName: String, editDate: Date) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Story")
+        
+        
+        do {
+            /*let fetchResult = try managedContext.fetch(fetchRequest)
+            var eventData = fetchResult[editIndex]
+            var editTitle = eventData.value(forKey: "title")
+            var editDate = eventData.value(forKey: "date")*/
+            
+            let results = try managedContext.fetch(fetchRequest)
+            
+            let managedObject = results[editIndex]
+            managedObject.setValue(editName, forKey: "title")
+            managedObject.setValue(editDate, forKey: "date")
+            
+            try managedContext.save()
+            print("update successful")
+            
+        } catch let error as NSError {
+            print("CreateEventVC: couldn't fetch data from DB \(error)")
+        }
+    }
+    
     static func convertDateInLocalTimeZone(dateTFString: String) -> Date {
         
         let dateFormatter = DateFormatter()
@@ -86,6 +116,12 @@ class Helper {
         let convertedDate = Date(timeInterval: timeInterval, since: dateFromString!)
         
         return convertedDate
+    }
+    
+    static func convertDateToString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return dateFormatter.string(from: date)
     }
 }
 
