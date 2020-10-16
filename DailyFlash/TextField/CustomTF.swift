@@ -2,7 +2,7 @@
 //  CustomTextField.swift
 //  DailyFlash
 //
-//  Created by Лена Мырленко on 2020/10/7.
+//  Created by Alexey Kirpichnikov on 2020/10/7.
 //  Copyright © 2020 Alexey Kirpichnikov. All rights reserved.
 //
 

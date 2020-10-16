@@ -26,9 +26,11 @@ class Helper {
         return currentDateLocal
     }
     
+    
     static func daysBetween(startDate: Date, endDate: Date) -> Int {
         Calendar.current.dateComponents([.day], from: startDate, to: endDate).day!
     }
+    
     
     static func defineColor(currentDateLocal: Date, endDate: Date, dif: Int) -> UIColor {
         if currentDateLocal < endDate && dif >= 30 {
@@ -48,6 +50,7 @@ class Helper {
         }
     }
     
+    
     static func saveToDB(date: Date, title: String) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -64,11 +67,12 @@ class Helper {
         
         do {
             try managedContext.save()
-            eventsArray.append(event)
+            eventArray.append(event)
         } catch let error as NSError {
             print("CreateStoryVC: Couldn't save. \(error), \(error.userInfo)")
         }
     }
+    
     
     static func editToDB(editIndex: Int, editName: String, editDate: Date) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -81,10 +85,6 @@ class Helper {
         
         
         do {
-            /*let fetchResult = try managedContext.fetch(fetchRequest)
-            var eventData = fetchResult[editIndex]
-            var editTitle = eventData.value(forKey: "title")
-            var editDate = eventData.value(forKey: "date")*/
             
             let results = try managedContext.fetch(fetchRequest)
             
@@ -99,6 +99,7 @@ class Helper {
             print("CreateEventVC: couldn't fetch data from DB \(error)")
         }
     }
+    
     
     static func convertDateInLocalTimeZone(dateTFString: String) -> Date {
         
@@ -118,24 +119,48 @@ class Helper {
         return convertedDate
     }
     
+    
     static func convertDateToString(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         return dateFormatter.string(from: date)
     }
+    
+    
+    static func swipeDeleteLogic(eventArray: [NSManagedObject], indexPath: IndexPath, fileName: String, errorMessage: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let event = eventArray[indexPath.row]
+        managedContext.delete(event)
+        
+        do {
+            try managedContext.save()
+        } catch {
+            print("\(fileName) - \(errorMessage)")
+        }
+    }
+    
+    
+    static func setupFetchDataFoundation() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Story")
+        fetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let theFetchResult = try managedContext.fetch(fetchRequest)
+            fetchResult = theFetchResult
+            
+        } catch let error as NSError {
+            print("MainView: couldn't fetch data from DB \(error)")
+        }
+    }
+    
 }
-
-
-enum ModulesMessages {
-    static let moreThanOneMonth = "In more than one month"
-    
-    static let moreThanOneWeek = "In more than one week"
-    
-    static let lessThanOneWeek = "In less than one week"
-    
-    static let lessThanOneDay = "In less than one day"
-}
-
 
 
 /*private func setupDatePicker() {

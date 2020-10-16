@@ -11,8 +11,10 @@ import CoreData
 
 protocol DataDelegate {}
 
-var eventsArray: [NSManagedObject] = []
-var eventDatesArray: [NSDate] = []
+var fetchResult: [NSManagedObject] = []
+
+var eventArray: [NSManagedObject] = []
+var eventDateArray: [NSDate] = []
 
 
 final class MainView: UIViewController, DataDelegate {
@@ -47,6 +49,11 @@ final class MainView: UIViewController, DataDelegate {
     //MARK:- Logic methods
     
     private func setupLogic() {
+        indexArray.insert(0, at: 0)
+        indexArray.insert(0, at: 1)
+        indexArray.insert(0, at: 2)
+        indexArray.insert(0, at: 3)
+        
         setCountersToZero()
         fetchDataFromDB()
         configureIndexCounters()
@@ -61,40 +68,29 @@ final class MainView: UIViewController, DataDelegate {
     
     private func fetchDataFromDB() {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
+        Helper.setupFetchDataFoundation()
         
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Story")
-        
-        fetchRequest.returnsObjectsAsFaults = false
-        
-        do {
-            let fetchResult = try managedContext.fetch(fetchRequest)
+        //Logic #1
+        eventArray = fetchResult
+        //Logic #2
+        eventDateArray.removeAll()
             
-            eventDatesArray.removeAll()
-            eventsArray = fetchResult
-            
-            for data in fetchResult {
+        for data in fetchResult {
                 
-                if let dateResult = data.value(forKey: "date") {
-                    eventDatesArray.append(dateResult as! NSDate)
+            if let dateResult = data.value(forKey: "date") {
+                    eventDateArray.append(dateResult as! NSDate)
                     
-                } else {
+            } else {
                     print("MainView. eventsDatesArray can't be populated because dateResult is nil")
-                }
             }
-            
-        } catch let error as NSError {
-            print("MainView: couldn't fetch data from DB \(error)")
         }
+
     }
+    
     
     private func configureIndexCounters() {
         
-        let datesArray = eventDatesArray
+        let datesArray = eventDateArray
         
         if datesArray.isEmpty == false {
      
@@ -220,7 +216,7 @@ extension MainView: UITableViewDataSource {
             numberOfRows = indexArray.count
             
         case lowerTableView:
-            numberOfRows = eventsArray.count
+            numberOfRows = eventArray.count
             
         default:
             print("MainView. numberOfRowsInSection COULDN'T be calculated.")
@@ -246,7 +242,7 @@ extension MainView: UITableViewDataSource {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomCellTwo
             
-            let event = eventsArray[indexPath.row]
+            let event = eventArray[indexPath.row]
             let title = event.value(forKey: "title") as? String ?? "No title"
             
             let date = event.value(forKey: "date") as? Date ?? Date(timeIntervalSinceNow: .infinity)
@@ -267,13 +263,17 @@ extension MainView: UITableViewDelegate {
         var height = CGFloat(1)
 
         switch tableView {
+            
         case upperTableView:
             height = CGFloat(48)
+            
         case lowerTableView:
             height = CGFloat(84)
+            
         default:
             print("MainView. COULDN'T initiate the heightForRowAt.")
         }
+        
         return height
     }
     
@@ -285,9 +285,6 @@ extension MainView: UITableViewDelegate {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
             self.deleteData(at: indexPath)
-            
-            //print("MainView. indexPath - \(indexPath.row)")
-            //var indexPathRow = indexPath.row
         }
         
         let editAction = UIContextualAction(style: .destructive, title: "Edit") { (contextualAction, view, boolValue) in
@@ -302,21 +299,13 @@ extension MainView: UITableViewDelegate {
     
     func deleteData(at indexPath: IndexPath) {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-    
-        let managedContext = appDelegate.persistentContainer.viewContext
+        Helper.swipeDeleteLogic(eventArray: eventArray,
+                           indexPath: indexPath,
+                           fileName: FileNames.MainView.description,
+                           errorMessage: ErrorMessages.managedContextCouldNotBeSaved.description)
         
-        let event = eventsArray[indexPath.row]
+        eventArray.remove(at: indexPath.row)
         
-        managedContext.delete(event)
-        
-        do {
-            try managedContext.save()
-        } catch {
-            print("MainView. Changes in managedContext COULDN'T be saved")
-        }
-        
-        eventsArray.remove(at: indexPath.row)
         lowerTableView.deleteRows(at: [indexPath], with: .fade)
         
         //launching the logic again..
@@ -325,7 +314,7 @@ extension MainView: UITableViewDelegate {
     }
     
     func editData(at indexPath: IndexPath) {
-        let event = eventsArray[indexPath.row]
+        let event = eventArray[indexPath.row]
         let title = event.value(forKey: "title") as? String ?? "No title"
         let date = event.value(forKey: "date") as? Date ?? Date(timeIntervalSinceNow: .infinity)
         

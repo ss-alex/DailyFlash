@@ -2,7 +2,7 @@
 //  CreateEventButton.swift
 //  DailyFlash
 //
-//  Created by Лена Мырленко on 2020/10/1.
+//  Created by Alexey Kirpichnikov on 2020/10/1.
 //  Copyright © 2020 Alexey Kirpichnikov. All rights reserved.
 //
 
