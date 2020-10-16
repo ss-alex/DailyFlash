@@ -49,14 +49,24 @@ final class MainView: UIViewController, DataDelegate {
     //MARK:- Logic methods
     
     private func setupLogic() {
+        
+        setIndexArrayToZero()
+        
+        setCountersToZero()
+        
+        fetchDataFromDB()
+        
+        eventDateArrayPopulate()
+        
+        configureIndexCounters()
+    }
+    
+    private func setIndexArrayToZero() {
+        indexArray.removeAll()
         indexArray.insert(0, at: 0)
         indexArray.insert(0, at: 1)
         indexArray.insert(0, at: 2)
         indexArray.insert(0, at: 3)
-        
-        setCountersToZero()
-        fetchDataFromDB()
-        configureIndexCounters()
     }
     
     private func setCountersToZero() {
@@ -74,9 +84,10 @@ final class MainView: UIViewController, DataDelegate {
         eventArray = fetchResult
         //Logic #2
         eventDateArray.removeAll()
-            
+    }
+    
+    private func eventDateArrayPopulate() {
         for data in fetchResult {
-                
             if let dateResult = data.value(forKey: "date") {
                     eventDateArray.append(dateResult as! NSDate)
                     
@@ -84,9 +95,7 @@ final class MainView: UIViewController, DataDelegate {
                     print("MainView. eventsDatesArray can't be populated because dateResult is nil")
             }
         }
-
     }
-    
     
     private func configureIndexCounters() {
         
@@ -230,15 +239,17 @@ extension MainView: UITableViewDataSource {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "upperCell", for: indexPath) as! CustomCellOne
             
-            let color = colorsArray[indexPath.row]
-            let text = textArray[indexPath.row]
-            let index = indexArray[indexPath.row]
+            let indicatorColor = colorsArray[indexPath.row]
+            let cellText = textArray[indexPath.row]
+            let indexInt = indexArray[indexPath.row]
             
-            cell.set(color: color, text: text, index: index)
+            cell.set(color: indicatorColor, text: cellText, index: indexInt)
             
             return cell
             
         } else {
+            
+            print("MainView. lowerTableView. Current IndexPath is - \(indexPath)")
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomCellTwo
             
