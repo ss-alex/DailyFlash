@@ -181,3 +181,13 @@ class Helper {
     df.dateFormat = "yyyy-MM-dd HH:mm:ss"
     let dateString = df.string(from: date)
 }*/
+
+
+/*for family: String in UIFont.familyNames
+{
+    print(family)
+    for names: String in UIFont.fontNames(forFamilyName: family)
+    {
+        print("== \(names)")
+    }
+}*/

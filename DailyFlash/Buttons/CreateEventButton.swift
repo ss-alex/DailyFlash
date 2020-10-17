@@ -23,7 +23,14 @@ final class CreateEventButton: UIButton  {
     private func configure() {
         backgroundColor = .customLightGray
         layer.cornerRadius = 20
+        
         setTitle("Create an event", for: .normal)
         setTitleColor(.customWhiteTitle, for: .normal)
+        titleLabel?.font = UIFont(name: "Mada-Bold", size: 24)
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowRadius = 4 /// it's the 'blur' in Figma
+        layer.shadowOffset = CGSize(width: 0, height: 4) /// width is 'x', height is 'y'
+        layer.shadowOpacity = 0.8 /// how transperent or bold the shadow is
     }
 }

@@ -49,15 +49,11 @@ final class MainView: UIViewController, DataDelegate {
     //MARK:- Logic methods
     
     private func setupLogic() {
-        
         setIndexArrayToZero()
-        
         setCountersToZero()
         
         fetchDataFromDB()
-        
         eventDateArrayPopulate()
-        
         configureIndexCounters()
     }
     
@@ -161,10 +157,10 @@ final class MainView: UIViewController, DataDelegate {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            actionButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            actionButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 34),
             actionButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             actionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            actionButton.heightAnchor.constraint(equalToConstant: 120)
+            actionButton.heightAnchor.constraint(equalToConstant: 96)
         ])
         
         actionButton.addTarget(self, action: #selector(createEvent), for: .touchUpInside)
@@ -175,6 +171,7 @@ final class MainView: UIViewController, DataDelegate {
         upperTableView.translatesAutoresizingMaskIntoConstraints = false
         upperTableView.backgroundColor = .gray
         upperTableView.alwaysBounceVertical = false
+        upperTableView.allowsSelection = false
         
         NSLayoutConstraint.activate([
             upperTableView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 20),
@@ -294,18 +291,29 @@ extension MainView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
-            self.deleteData(at: indexPath)
+        var swipeAction = UISwipeActionsConfiguration()
+        
+        switch tableView {
+        case upperTableView:
+            swipeAction = UISwipeActionsConfiguration()
+            
+        case lowerTableView:
+            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (contextualAction, view, boolValue) in
+                self.deleteData(at: indexPath)
+            }
+            
+            let editAction = UIContextualAction(style: .destructive, title: "Edit") { (contextualAction, view, boolValue) in
+                self.editData(at: indexPath)
+            }
+            editAction.backgroundColor = .black
+            
+            swipeAction = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+            
+        default:
+            print("MainView. default case for swipe action.")
         }
         
-        let editAction = UIContextualAction(style: .destructive, title: "Edit") { (contextualAction, view, boolValue) in
-            self.editData(at: indexPath)
-        }
-        
-        editAction.backgroundColor = .black
-        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-        
-        return swipeActions
+        return swipeAction
     }
     
     func deleteData(at indexPath: IndexPath) {

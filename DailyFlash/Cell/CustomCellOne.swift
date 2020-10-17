@@ -56,7 +56,9 @@ class CustomCellOne: UITableViewCell {
             eventTitle.rightAnchor.constraint(equalTo: eventIndex.leftAnchor, constant: -10)
         ])
         
-        indicatorView.backgroundColor = .purple
+        
     }
+    
+
     
 }

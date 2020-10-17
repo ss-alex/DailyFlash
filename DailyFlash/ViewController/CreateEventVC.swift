@@ -50,7 +50,7 @@ final class CreateEventVC: UIViewController {
             eventNameTF.text = editEventName
             dateTF.text = editEventDate
         } else {
-            eventNameTF.text = PlaceholderText.nameTheEvent
+            eventNameTF.text = PlaceholderText.typeTheName
             dateTF.text = PlaceholderText.pickTheDate
         }
     }

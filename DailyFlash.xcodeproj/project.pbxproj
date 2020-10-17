@@ -10,6 +10,7 @@
 		D92EF6D825259F110099D73B /* CreateEventButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92EF6D725259F110099D73B /* CreateEventButton.swift */; };
 		D947FB57252D770400C7AE3C /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D947FB56252D770400C7AE3C /* CustomLabel.swift */; };
 		D947FB5A252D7AFE00C7AE3C /* CustomTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = D947FB59252D7AFE00C7AE3C /* CustomTF.swift */; };
+		D94AF281253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D94AF280253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf */; };
 		D9525493252EC58500B19F75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9525492252EC58500B19F75 /* Constants.swift */; };
 		D95BD32E2522E30D00D153AE /* CustomCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95BD32D2522E30D00D153AE /* CustomCellOne.swift */; };
 		D96DD7DB24DE2A5E00BF5471 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */; };
@@ -31,6 +32,7 @@
 		D92EF6D725259F110099D73B /* CreateEventButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventButton.swift; sourceTree = "<group>"; };
 		D947FB56252D770400C7AE3C /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		D947FB59252D7AFE00C7AE3C /* CustomTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTF.swift; sourceTree = "<group>"; };
+		D94AF280253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf"; sourceTree = "<group>"; };
 		D9525492252EC58500B19F75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D95BD32D2522E30D00D153AE /* CustomCellOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellOne.swift; sourceTree = "<group>"; };
 		D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
@@ -83,6 +85,22 @@
 				D947FB59252D7AFE00C7AE3C /* CustomTF.swift */,
 			);
 			path = TextField;
+			sourceTree = "<group>";
+		};
+		D94AF27F253B54DE00A2DB33 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D94AF280253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		D94AF282253B569C00A2DB33 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D94AF27F253B54DE00A2DB33 /* Fonts */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D9525491252EC56900B19F75 /* Constants */ = {
@@ -165,6 +183,7 @@
 				D92EF6D625259EC30099D73B /* Buttons */,
 				D947FB55252D768F00C7AE3C /* Label */,
 				D947FB58252D7AC100C7AE3C /* TextField */,
+				D94AF282253B569C00A2DB33 /* Resources */,
 				D9E4051724CE999A00A90D0A /* AppDelegate.swift */,
 				D9E4051924CE999A00A90D0A /* SceneDelegate.swift */,
 				D9E4052324CE999E00A90D0A /* Assets.xcassets */,
@@ -234,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9E4052724CE999E00A90D0A /* LaunchScreen.storyboard in Resources */,
+				D94AF281253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf in Resources */,
 				D9E4052424CE999E00A90D0A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

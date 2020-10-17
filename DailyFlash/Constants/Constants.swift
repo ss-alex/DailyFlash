@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 enum PlaceholderText {
-    static let nameTheEvent = "Type the name"
+    static let typeTheName = "Type the name"
     static let pickTheDate = "Pick the date"
 }
 
