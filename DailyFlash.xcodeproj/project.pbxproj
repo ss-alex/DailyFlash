@@ -12,6 +12,10 @@
 		D947FB5A252D7AFE00C7AE3C /* CustomTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = D947FB59252D7AFE00C7AE3C /* CustomTF.swift */; };
 		D94AF281253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D94AF280253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf */; };
 		D9525493252EC58500B19F75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9525492252EC58500B19F75 /* Constants.swift */; };
+		D95B971D253C8A8100A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D95B9719253C8A8000A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf */; };
+		D95B971E253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D95B971A253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf */; };
+		D95B971F253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D95B971B253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf */; };
+		D95B9720253C8A8100A30B7D /* Mada-Light_bc425868c05f376407ea583727e2847e.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D95B971C253C8A8100A30B7D /* Mada-Light_bc425868c05f376407ea583727e2847e.ttf */; };
 		D95BD32E2522E30D00D153AE /* CustomCellOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95BD32D2522E30D00D153AE /* CustomCellOne.swift */; };
 		D96DD7DB24DE2A5E00BF5471 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */; };
 		D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DD7DD24DE2B4100BF5471 /* Helper.swift */; };
@@ -34,6 +38,10 @@
 		D947FB59252D7AFE00C7AE3C /* CustomTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTF.swift; sourceTree = "<group>"; };
 		D94AF280253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf"; sourceTree = "<group>"; };
 		D9525492252EC58500B19F75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D95B9719253C8A8000A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf"; sourceTree = "<group>"; };
+		D95B971A253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf"; sourceTree = "<group>"; };
+		D95B971B253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf"; sourceTree = "<group>"; };
+		D95B971C253C8A8100A30B7D /* Mada-Light_bc425868c05f376407ea583727e2847e.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Light_bc425868c05f376407ea583727e2847e.ttf"; sourceTree = "<group>"; };
 		D95BD32D2522E30D00D153AE /* CustomCellOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellOne.swift; sourceTree = "<group>"; };
 		D96DD7DA24DE2A5E00BF5471 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		D96DD7DD24DE2B4100BF5471 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -90,6 +98,10 @@
 		D94AF27F253B54DE00A2DB33 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D95B971A253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf */,
+				D95B971C253C8A8100A30B7D /* Mada-Light_bc425868c05f376407ea583727e2847e.ttf */,
+				D95B9719253C8A8000A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf */,
+				D95B971B253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf */,
 				D94AF280253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf */,
 			);
 			path = Fonts;
@@ -254,7 +266,11 @@
 			files = (
 				D9E4052724CE999E00A90D0A /* LaunchScreen.storyboard in Resources */,
 				D94AF281253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf in Resources */,
+				D95B971E253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf in Resources */,
+				D95B971F253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf in Resources */,
+				D95B9720253C8A8100A30B7D /* Mada-Light_bc425868c05f376407ea583727e2847e.ttf in Resources */,
 				D9E4052424CE999E00A90D0A /* Assets.xcassets in Resources */,
+				D95B971D253C8A8100A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

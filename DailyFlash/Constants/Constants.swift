@@ -15,10 +15,10 @@ enum PlaceholderText {
 }
 
 enum ModulesMessages {
-    static let moreThanOneMonth = "In more than one month"
-    static let moreThanOneWeek = "In more than one week"
-    static let lessThanOneWeek = "In less than one week"
-    static let lessThanOneDay = "In less than one day"
+    static let moreThanOneMonth = "In more than one /nmonth"
+    static let moreThanOneWeek = "In more than one /nweek"
+    static let lessThanOneWeek = "In less than one /nweek"
+    static let lessThanOneDay = "In less than one /nday"
 }
 
 enum ErrorMessages {

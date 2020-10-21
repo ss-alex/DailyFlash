@@ -12,12 +12,19 @@ import UIKit
 class CustomCellOne: UITableViewCell {
     
     private let indicatorView = UIView()
-    private let eventTitle = UILabel()
+    private let eventLabel = UILabel()
     private let eventIndex = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayout()
+        
+        setupIndicatorView()
+        setupEventTitle()
+        setupEventIndex()
+        
+        backgroundColor = .customDarkGray
+        //backgroundColor = .lightGray
     }
     
     required init?(coder: NSCoder) {
@@ -26,37 +33,60 @@ class CustomCellOne: UITableViewCell {
     
     func set(color: UIColor, text: String, index: Int) {
         indicatorView.backgroundColor = color
-        eventTitle.text = text
+        eventLabel.text = text
         eventIndex.text = String(index)
     }
     
     private func setupLayout() {
         self.addSubview(indicatorView)
-        self.addSubview(eventTitle)
+        self.addSubview(eventLabel)
         self.addSubview(eventIndex)
         
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
-        eventTitle.translatesAutoresizingMaskIntoConstraints = false
+        eventLabel.translatesAutoresizingMaskIntoConstraints = false
         eventIndex.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            indicatorView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            indicatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
-            indicatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5),
-            indicatorView.widthAnchor.constraint(equalToConstant: 20),
+            indicatorView.topAnchor.constraint(equalTo: self.topAnchor, constant: 12),
+            //indicatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+            indicatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+            indicatorView.widthAnchor.constraint(equalToConstant: 14),
+            indicatorView.heightAnchor.constraint(equalToConstant: 14),
             
             eventIndex.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            eventIndex.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+            //eventIndex.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
             eventIndex.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -5),
             eventIndex.widthAnchor.constraint(equalToConstant: 20),
+            eventIndex.heightAnchor.constraint(equalToConstant: 30),
             
-            eventTitle.leftAnchor.constraint(equalTo: indicatorView.rightAnchor, constant: 10),
-            eventTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            eventTitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
-            eventTitle.rightAnchor.constraint(equalTo: eventIndex.leftAnchor, constant: -10)
+            eventLabel.leftAnchor.constraint(equalTo: indicatorView.rightAnchor, constant: 10),
+            eventLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            eventLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+            //eventTitle.rightAnchor.constraint(equalTo: eventIndex.leftAnchor, constant: -10)
+            //eventLabel.widthAnchor.constraint(equalToConstant: 174)
+            eventLabel.widthAnchor.constraint(equalToConstant: 220)
         ])
+    }
+    
+    private func setupIndicatorView() {
+        indicatorView.layer.cornerRadius = 14/2
+    }
+    
+    private func setupEventTitle() {
+        eventLabel.font = UIFont(name: "Mada-Light", size: 22)
+        eventLabel.textColor = .customWhiteTitle
         
-        
+        //eventLabel.backgroundColor = .gray
+        eventLabel.numberOfLines = 0 /// it allows any number of lines
+        eventLabel.lineBreakMode = .byWordWrapping
+        //eventLabel.sizeToFit()
+    }
+    
+    private func setupEventIndex() {
+        eventIndex.font = UIFont(name: "Mada-Medium", size: 30)
+        eventIndex.textColor = .customWhiteTitle
+        //eventIndex.backgroundColor = .customLightGray
+        eventIndex.textAlignment = .center
     }
     
 

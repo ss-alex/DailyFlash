@@ -174,13 +174,14 @@ final class MainView: UIViewController, DataDelegate {
         upperTableView.allowsSelection = false
         
         NSLayoutConstraint.activate([
-            upperTableView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 20),
+            upperTableView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 38),
             upperTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             upperTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            upperTableView.heightAnchor.constraint(equalToConstant: 192)
+            upperTableView.heightAnchor.constraint(equalToConstant: 160)
         ])
         
         upperTableView.register(CustomCellOne.self, forCellReuseIdentifier: "upperCell")
+        upperTableView.separatorStyle = .none
         upperTableView.delegate = self
         upperTableView.dataSource = self
     }
@@ -273,7 +274,8 @@ extension MainView: UITableViewDelegate {
         switch tableView {
             
         case upperTableView:
-            height = CGFloat(48)
+            //height = CGFloat(64)
+            height = CGFloat(40)
             
         case lowerTableView:
             height = CGFloat(84)

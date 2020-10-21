@@ -5,6 +5,10 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf</string>
+		<string>Mada-Light_bc425868c05f376407ea583727e2847e.ttf</string>
+		<string>Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf</string>
+		<string>Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf</string>
+		<string>CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
