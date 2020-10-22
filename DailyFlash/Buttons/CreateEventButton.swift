@@ -25,7 +25,7 @@ final class CreateEventButton: UIButton  {
         layer.cornerRadius = 20
         
         setTitle("Create an event", for: .normal)
-        setTitleColor(.customWhiteTitle, for: .normal)
+        setTitleColor(.customWhite, for: .normal)
         titleLabel?.font = UIFont(name: "Mada-Bold", size: 24)
         
         layer.shadowColor = UIColor.black.cgColor

@@ -74,7 +74,7 @@ class CustomCellOne: UITableViewCell {
     
     private func setupEventTitle() {
         eventLabel.font = UIFont(name: "Mada-Light", size: 22)
-        eventLabel.textColor = .customWhiteTitle
+        eventLabel.textColor = .customWhite
         
         //eventLabel.backgroundColor = .gray
         eventLabel.numberOfLines = 0 /// it allows any number of lines
@@ -84,7 +84,7 @@ class CustomCellOne: UITableViewCell {
     
     private func setupEventIndex() {
         eventIndex.font = UIFont(name: "Mada-Medium", size: 30)
-        eventIndex.textColor = .customWhiteTitle
+        eventIndex.textColor = .customWhite
         //eventIndex.backgroundColor = .customLightGray
         eventIndex.textAlignment = .center
     }

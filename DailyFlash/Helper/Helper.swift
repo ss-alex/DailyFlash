@@ -34,16 +34,20 @@ class Helper {
     
     static func defineColor(currentDateLocal: Date, endDate: Date, dif: Int) -> UIColor {
         if currentDateLocal < endDate && dif >= 30 {
-            return UIColor.systemGreen
+            //return UIColor.systemGreen
+            return .customGreen
                 
         } else if currentDateLocal < endDate && dif >= 7 && dif < 30 {
-            return UIColor.systemBlue
+            //return UIColor.systemBlue
+            return .customBlue
                 
         } else if currentDateLocal < endDate && dif >= 1 && dif < 7 {
-            return UIColor.systemYellow
+            //return UIColor.systemYellow
+            return .customYellow
                 
         } else if currentDateLocal < endDate && dif >= 0 && dif < 1 {
-            return UIColor.systemRed
+            //return UIColor.systemRed
+            return .customRed
                 
         } else {
             return UIColor.systemGray
@@ -160,6 +164,38 @@ class Helper {
         }
     }
     
+    static func createAttributedString(defaultUIFont: UIFont,
+                                       defaultColor: UIColor,
+                                       customFont: UIFont,
+                                       customColor: UIColor,
+                                       stringComponentOne: Int,
+                                       stringComponentTwo: Int,
+                                       stringComponentThree: Int,
+                                       stringComponentFour: Int) -> NSObject {
+        let defaultAttributes = [
+            .font: defaultUIFont,
+            .foregroundColor: defaultColor
+        ] as [NSMutableAttributedString.Key: Any]
+        
+        let timeAttributes = [
+            .font: customFont,
+            .foregroundColor: customColor
+        ] as [NSAttributedString.Key: Any]
+        
+        let attributedStringComponents = [
+            "\(stringComponentOne)",
+            NSAttributedString(string: "d", attributes: timeAttributes),
+            "\(stringComponentTwo)",
+            NSAttributedString(string: "h", attributes: timeAttributes),
+            "\(stringComponentThree)",
+            NSAttributedString(string: "m", attributes: timeAttributes),
+            "\(stringComponentFour)",
+            NSAttributedString(string: "s", attributes: timeAttributes)
+        ] as [AttributedStringComponent]
+        
+        return NSAttributedString(from: attributedStringComponents, defaultAttributes: defaultAttributes)!
+    }
+    
 }
 
 
@@ -191,3 +227,27 @@ class Helper {
         print("== \(names)")
     }
 }*/
+
+
+/*let defaultAttributes = [.font: UIFont(name: "Mada-Bold", size: 34),
+                         .foregroundColor: UIColor.customWhite
+] as [NSMutableAttributedString.Key: Any]
+
+let timeAttributes = [.font: UIFont(name: "CantoraOne-Regular", size: 24),
+                      .foregroundColor: UIColor.customRed
+] as [NSAttributedString.Key: Any]
+
+let attributedStringComponents = [
+    "\(timeLeft.day!)",
+    NSAttributedString(string: "d", attributes: timeAttributes),
+    
+    "\(timeLeft.hour!)",
+    NSAttributedString(string: "h", attributes: timeAttributes),
+    
+    "\(timeLeft.minute!)",
+    NSAttributedString(string: "m", attributes: timeAttributes),
+    
+    "\(timeLeft.second!)",
+    NSAttributedString(string: "s", attributes: timeAttributes)
+    
+] as [AttributedStringComponent]*/

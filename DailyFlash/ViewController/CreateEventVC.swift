@@ -11,10 +11,10 @@ import CoreData
 
 final class CreateEventVC: UIViewController {
     
-    let eventNameLabel = CustomLabel(textColor: .customWhiteTitle, text: "Event name")
+    let eventNameLabel = CustomLabel(textColor: .customWhite, text: "Event name")
     var eventNameTF = CustomTF()
     
-    let dateLabel = CustomLabel(textColor: .customWhiteTitle, text: "Date")
+    let dateLabel = CustomLabel(textColor: .customWhite, text: "Date")
     var dateTF = CustomTF()
     var dateTFString: String = ""
     

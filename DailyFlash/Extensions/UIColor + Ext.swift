@@ -14,7 +14,7 @@ extension UIColor {
     
     static let customLightGray = UIColor(red: 43/255.0, green: 41/255.0, blue: 41/255.0, alpha: 1)
     
-    static let customWhiteTitle = UIColor(red: 184/255.0, green: 184/255.0, blue: 184/255.0, alpha: 1)
+    static let customWhite = UIColor(red: 184/255.0, green: 184/255.0, blue: 184/255.0, alpha: 1)
     
     static let customGreen = UIColor(red: 16/255.0, green: 158/255.0, blue: 39/255.0, alpha: 1)
     

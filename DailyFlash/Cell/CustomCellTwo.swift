@@ -10,11 +10,13 @@ import UIKit
 
 class CustomCellTwo: UITableViewCell {
     
+    private let backView = UIView()
+    
     private let titleLabel = UILabel()
     private let countdownLabel = UILabel()
     private let indicator = UIImageView()
     
-    private let customSize: CGFloat = 14
+    private let customSize: CGFloat = 24
     
     var timer: Timer!
     
@@ -39,6 +41,9 @@ class CustomCellTwo: UITableViewCell {
     }
     
     private func setup() {
+        backgroundColor = .customDarkGray
+        setupBackView()
+        
         setupTitleLabel()
         setupCountDownLabel()
         setupIndicator()
@@ -46,30 +51,50 @@ class CustomCellTwo: UITableViewCell {
         setupTimer()
     }
     
+    private func setupBackView() {
+        addSubview(backView)
+        
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        let top = backView.topAnchor.constraint(equalTo: self.topAnchor, constant: 6)
+        let left = backView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20)
+        let right = backView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20)
+        let bottom = backView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -6)
+        NSLayoutConstraint.activate([top, left, right, bottom])
+        
+        backView.backgroundColor = .customLightGray
+        backView.layer.cornerRadius = 20
+        backView.layer.shadowColor = UIColor.black.cgColor
+        backView.layer.shadowRadius = 4
+        backView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        backView.layer.shadowOpacity = 0.8
+    }
+    
     private func setupTitleLabel() {
         addSubview(titleLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        let top = titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10)
-        let left = titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
-        let width = titleLabel.widthAnchor.constraint(equalToConstant: 150)
-        let height = titleLabel.heightAnchor.constraint(equalToConstant: 24)
+        let top = titleLabel.topAnchor.constraint(equalTo: backView.topAnchor, constant: 18)
+        let left = titleLabel.leftAnchor.constraint(equalTo: backView.leftAnchor, constant: 16)
+        let width = titleLabel.widthAnchor.constraint(equalToConstant: 240)
+        let height = titleLabel.heightAnchor.constraint(equalToConstant: 25)
         NSLayoutConstraint.activate([top, left, width, height])
         
-        titleLabel.backgroundColor = .systemGray
+        titleLabel.font = UIFont(name: "Mada-Regular", size: 24)
+        titleLabel.textColor = .customWhite
     }
     
     private func setupCountDownLabel() {
         addSubview(countdownLabel)
         
         countdownLabel.translatesAutoresizingMaskIntoConstraints = false
-        let top = countdownLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10)
-        let left = countdownLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
-        let right = countdownLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10)
-        let height = countdownLabel.heightAnchor.constraint(equalToConstant: 24)
+        let top = countdownLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 11)
+        let left = countdownLabel.leftAnchor.constraint(equalTo: backView.leftAnchor, constant: 16)
+        let right = countdownLabel.rightAnchor.constraint(equalTo: backView.rightAnchor, constant: -24)
+        let height = countdownLabel.heightAnchor.constraint(equalToConstant: 28)
         NSLayoutConstraint.activate([top, left, right, height])
         
-        countdownLabel.backgroundColor = .systemGray
+        countdownLabel.font = UIFont(name: "Mada-Bold", size: 34)
+        countdownLabel.textColor = .customWhite
     }
     
     private func setupIndicator() {
@@ -77,7 +102,7 @@ class CustomCellTwo: UITableViewCell {
         
         indicator.translatesAutoresizingMaskIntoConstraints = false
         let yAnchor = indicator.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
-        let right = indicator.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10)
+        let right = indicator.rightAnchor.constraint(equalTo: backView.rightAnchor, constant: -24)
         let width = indicator.widthAnchor.constraint(equalToConstant: customSize)
         let height = indicator.heightAnchor.constraint(equalToConstant: customSize)
         NSLayoutConstraint.activate([yAnchor, right, width, height])
@@ -87,8 +112,8 @@ class CustomCellTwo: UITableViewCell {
     
     private func setupTimer() {
         timer = Timer.scheduledTimer(
-            //timeInterval: 0.1,
-            timeInterval: 10.0,
+            timeInterval: 0.1,
+            //timeInterval: 10.0,
             target: self,
             selector: #selector(updateTime),
             userInfo: nil,
@@ -108,9 +133,20 @@ class CustomCellTwo: UITableViewCell {
             from: currentDateLocal,
             to: savedDate)
         
+        
+        let createdAttributedString = Helper.createAttributedString(
+            defaultUIFont: UIFont(name: "Mada-Bold", size: 34)!,
+            defaultColor: UIColor.customWhite,
+            customFont: UIFont(name: "CantoraOne-Regular", size: 24)!,
+            customColor: UIColor.customRed,
+            stringComponentOne: timeLeft.day!,
+            stringComponentTwo: timeLeft.hour!,
+            stringComponentThree: timeLeft.minute!,
+            stringComponentFour: timeLeft.second!
+        )
+        
         if savedDate >= currentDateLocal {
-            countdownLabel.text = "\(timeLeft.day!)d \(timeLeft.hour!)h \(timeLeft.minute!)m \(timeLeft.second!)s"
-            
+            countdownLabel.attributedText = createdAttributedString as! NSAttributedString
         } else {
             countdownLabel.text = "EXPIRED"
         }

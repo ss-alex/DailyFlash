@@ -31,7 +31,8 @@ final class MainView: UIViewController, DataDelegate {
     
     var indicatorColor: UIColor = UIColor.purple
     
-    let colorsArray = [UIColor.green, UIColor.blue, UIColor.yellow, UIColor.red]
+    //let colorsArray = [UIColor.green, UIColor.blue, UIColor.yellow, UIColor.red]
+    let colorsArray: [UIColor] = [.customGreen, .customBlue, .customYellow, .customRed]
     
     let textArray = ["In more than one month",
                      "In more than one week",
@@ -169,9 +170,9 @@ final class MainView: UIViewController, DataDelegate {
     private func setupUpperTV() {
         view.addSubview(upperTableView)
         upperTableView.translatesAutoresizingMaskIntoConstraints = false
-        upperTableView.backgroundColor = .gray
         upperTableView.alwaysBounceVertical = false
         upperTableView.allowsSelection = false
+        upperTableView.separatorStyle = .none
         
         NSLayoutConstraint.activate([
             upperTableView.topAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 38),
@@ -181,7 +182,6 @@ final class MainView: UIViewController, DataDelegate {
         ])
         
         upperTableView.register(CustomCellOne.self, forCellReuseIdentifier: "upperCell")
-        upperTableView.separatorStyle = .none
         upperTableView.delegate = self
         upperTableView.dataSource = self
     }
@@ -189,12 +189,13 @@ final class MainView: UIViewController, DataDelegate {
     private func setupLowerTV() {
         view.addSubview(lowerTableView)
         lowerTableView.translatesAutoresizingMaskIntoConstraints = false
-        lowerTableView.backgroundColor = .brown
+        lowerTableView.backgroundColor = .customDarkGray
+        upperTableView.separatorStyle = .none
         
         NSLayoutConstraint.activate([
             lowerTableView.topAnchor.constraint(equalTo: upperTableView.bottomAnchor,constant: 20),
-            lowerTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            lowerTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            lowerTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            lowerTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             lowerTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant:-20)
         ])
         
@@ -262,6 +263,8 @@ extension MainView: UITableViewDataSource {
             let color = Helper.defineColor(currentDateLocal: currentDateLocal, endDate: endDate, dif: dif)
         
             cell.set(title: title, savedEventDate: date, color: color)
+            cell.selectionStyle = .none
+            
             return cell
         }
     }
@@ -278,7 +281,7 @@ extension MainView: UITableViewDelegate {
             height = CGFloat(40)
             
         case lowerTableView:
-            height = CGFloat(84)
+            height = CGFloat(110)
             
         default:
             print("MainView. COULDN'T initiate the heightForRowAt.")
@@ -346,6 +349,14 @@ extension MainView: UITableViewDelegate {
         vc.editIndex = indexPath.row
         
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == self.lowerTableView {
+            if scrollView.contentOffset.y >= 0 {
+                scrollView.contentOffset = CGPoint.zero
+            }
+        }
     }
     
 }
