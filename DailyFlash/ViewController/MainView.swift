@@ -190,13 +190,14 @@ final class MainView: UIViewController, DataDelegate {
         view.addSubview(lowerTableView)
         lowerTableView.translatesAutoresizingMaskIntoConstraints = false
         lowerTableView.backgroundColor = .customDarkGray
-        upperTableView.separatorStyle = .none
+        lowerTableView.separatorStyle = .none
         
         NSLayoutConstraint.activate([
             lowerTableView.topAnchor.constraint(equalTo: upperTableView.bottomAnchor,constant: 20),
             lowerTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             lowerTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            lowerTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant:-20)
+            //lowerTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant:-20)
+            lowerTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         lowerTableView.register(CustomCellTwo.self, forCellReuseIdentifier: "customCell")
@@ -277,7 +278,6 @@ extension MainView: UITableViewDelegate {
         switch tableView {
             
         case upperTableView:
-            //height = CGFloat(64)
             height = CGFloat(40)
             
         case lowerTableView:
@@ -350,10 +350,10 @@ extension MainView: UITableViewDelegate {
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
+        
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.lowerTableView {
-            if scrollView.contentOffset.y >= 0 {
+            if scrollView.contentOffset.y <= 0 {
                 scrollView.contentOffset = CGPoint.zero
             }
         }

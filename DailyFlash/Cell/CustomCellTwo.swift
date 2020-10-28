@@ -113,7 +113,6 @@ class CustomCellTwo: UITableViewCell {
     private func setupTimer() {
         timer = Timer.scheduledTimer(
             timeInterval: 0.1,
-            //timeInterval: 10.0,
             target: self,
             selector: #selector(updateTime),
             userInfo: nil,
