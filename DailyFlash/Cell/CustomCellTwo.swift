@@ -134,9 +134,9 @@ class CustomCellTwo: UITableViewCell {
         
         
         let createdAttributedString = Helper.createAttributedString(
-            defaultUIFont: UIFont(name: "Mada-Bold", size: 34)!,
+            defaultUIFont: UIFont(name: "Mada-Bold", size: 35)!,
             defaultColor: UIColor.customWhite,
-            customFont: UIFont(name: "CantoraOne-Regular", size: 24)!,
+            customFont: UIFont(name: "CantoraOne-Regular", size: 25)!,
             customColor: UIColor.customRed,
             stringComponentOne: timeLeft.day!,
             stringComponentTwo: timeLeft.hour!,

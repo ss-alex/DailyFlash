@@ -184,13 +184,13 @@ class Helper {
         
         let attributedStringComponents = [
             "\(stringComponentOne)",
-            NSAttributedString(string: "d", attributes: timeAttributes),
+            NSAttributedString(string: "days", attributes: timeAttributes),
+            "",
             "\(stringComponentTwo)",
-            NSAttributedString(string: "h", attributes: timeAttributes),
+            NSAttributedString(string: "hours", attributes: timeAttributes),
+            "",
             "\(stringComponentThree)",
-            NSAttributedString(string: "m", attributes: timeAttributes),
-            "\(stringComponentFour)",
-            NSAttributedString(string: "s", attributes: timeAttributes)
+            NSAttributedString(string: "mins", attributes: timeAttributes),
         ] as [AttributedStringComponent]
         
         return NSAttributedString(from: attributedStringComponents, defaultAttributes: defaultAttributes)!
@@ -250,4 +250,16 @@ let attributedStringComponents = [
     "\(timeLeft.second!)",
     NSAttributedString(string: "s", attributes: timeAttributes)
     
+] as [AttributedStringComponent]*/
+
+
+/*let attributedStringComponents = [
+    "\(stringComponentOne)",
+    NSAttributedString(string: "d", attributes: timeAttributes),
+    "\(stringComponentTwo)",
+    NSAttributedString(string: "h", attributes: timeAttributes),
+    "\(stringComponentThree)",
+    NSAttributedString(string: "m", attributes: timeAttributes),
+    "\(stringComponentFour)",
+    NSAttributedString(string: "s", attributes: timeAttributes)
 ] as [AttributedStringComponent]*/
