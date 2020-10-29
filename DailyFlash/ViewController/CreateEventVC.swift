@@ -32,6 +32,8 @@ final class CreateEventVC: UIViewController {
     
     var delegate: DataDelegate?
     
+    let padding: CGFloat = 20
+    
     init(editFlag: Bool) {
         self.editFlag = editFlag
         super.init(nibName: nil, bundle: nil)
@@ -146,25 +148,25 @@ final class CreateEventVC: UIViewController {
         }
         
         NSLayoutConstraint.activate([
-            eventNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            eventNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             eventNameLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20),
-            eventNameLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
+            eventNameLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -20),
             eventNameLabel.heightAnchor.constraint(equalToConstant: 24),
             
-            eventNameTF.topAnchor.constraint(equalTo: eventNameLabel.bottomAnchor, constant: 5),
-            eventNameTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
-            eventNameTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
-            eventNameTF.heightAnchor.constraint(equalToConstant: 60),
+            eventNameTF.topAnchor.constraint(equalTo: eventNameLabel.bottomAnchor, constant: 6),
+            eventNameTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding),
+            eventNameTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding),
+            eventNameTF.heightAnchor.constraint(equalToConstant: 64),
             
             dateLabel.topAnchor.constraint(equalTo: eventNameTF.bottomAnchor, constant: 20),
-            dateLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20),
-            dateLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
+            dateLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding),
+            dateLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding),
             dateLabel.heightAnchor.constraint(equalToConstant: 24),
             
-            dateTF.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 5),
-            dateTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
-            dateTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
-            dateTF.heightAnchor.constraint(equalToConstant: 60),
+            dateTF.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 6),
+            dateTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding),
+            dateTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding),
+            dateTF.heightAnchor.constraint(equalToConstant: 64),
             
             saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             saveButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),

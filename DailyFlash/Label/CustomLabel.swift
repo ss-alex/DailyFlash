@@ -12,6 +12,7 @@ class CustomLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
@@ -22,6 +23,11 @@ class CustomLabel: UILabel {
         self.init(frame: .zero)
         self.textColor = textColor
         self.text = text
+    }
+    
+    private func setupUI() {
+        self.font = UIFont(name: "Mada-Regular", size: 26)
+        self.layer.cornerRadius = 20
     }
 
 }

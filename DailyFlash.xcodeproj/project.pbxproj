@@ -12,6 +12,7 @@
 		D947FB5A252D7AFE00C7AE3C /* CustomTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = D947FB59252D7AFE00C7AE3C /* CustomTF.swift */; };
 		D94AF281253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D94AF280253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf */; };
 		D9525493252EC58500B19F75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9525492252EC58500B19F75 /* Constants.swift */; };
+		D953FD70254A91DB00853DC6 /* UITextField + Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953FD6F254A91DB00853DC6 /* UITextField + Padding.swift */; };
 		D95B971D253C8A8100A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D95B9719253C8A8000A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf */; };
 		D95B971E253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D95B971A253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf */; };
 		D95B971F253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D95B971B253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf */; };
@@ -39,6 +40,7 @@
 		D947FB59252D7AFE00C7AE3C /* CustomTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTF.swift; sourceTree = "<group>"; };
 		D94AF280253B551400A2DB33 /* Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Bold_beb4e18ace521ae46ddee894d13b1334.ttf"; sourceTree = "<group>"; };
 		D9525492252EC58500B19F75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D953FD6F254A91DB00853DC6 /* UITextField + Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField + Padding.swift"; sourceTree = "<group>"; };
 		D95B9719253C8A8000A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf"; sourceTree = "<group>"; };
 		D95B971A253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf"; sourceTree = "<group>"; };
 		D95B971B253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf"; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				D9B0662B25130CB4001EF2FA /* TextField + DatePicker.swift */,
 				D9B0662D25130D41001EF2FA /* UIColor + Ext.swift */,
 				D967116125414E8F008CAEB0 /* AttributedString + Ext.swift */,
+				D953FD6F254A91DB00853DC6 /* UITextField + Padding.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				D96DD7E124DE2EDE00BF5471 /* CustomCellTwo.swift in Sources */,
 				D947FB57252D770400C7AE3C /* CustomLabel.swift in Sources */,
 				D9E4053224CE9B4200A90D0A /* CreateEventVC.swift in Sources */,
+				D953FD70254A91DB00853DC6 /* UITextField + Padding.swift in Sources */,
 				D96DD7DE24DE2B4100BF5471 /* Helper.swift in Sources */,
 				D967116225414E8F008CAEB0 /* AttributedString + Ext.swift in Sources */,
 				D9AD364F24F8C3C000630918 /* String + DateFormatter.swift in Sources */,

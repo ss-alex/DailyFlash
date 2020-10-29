@@ -22,6 +22,9 @@ class CustomTF: UITextField {
     private func setupUI() {
         backgroundColor = .customLightGray
         layer.cornerRadius = 20
+        font = UIFont(name: "Mada-Light", size: 22)
+        self.setLeftPaddingPoints(6)
+        self.setRightPaddingPoints(6)
     }
 
 }
