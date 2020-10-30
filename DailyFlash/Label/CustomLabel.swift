@@ -26,7 +26,7 @@ class CustomLabel: UILabel {
     }
     
     private func setupUI() {
-        self.font = UIFont(name: "Mada-Regular", size: 26)
+        self.font = UIFont(name: "Mada-Bold", size: 26)
         self.layer.cornerRadius = 20
     }
 

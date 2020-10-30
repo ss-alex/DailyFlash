@@ -22,9 +22,17 @@ class CustomTF: UITextField {
     private func setupUI() {
         backgroundColor = .customLightGray
         layer.cornerRadius = 20
-        font = UIFont(name: "Mada-Light", size: 22)
+        
+        font = UIFont(name: "Mada-Regular", size: 26)
+        textColor = UIColor.customWhite
+        
         self.setLeftPaddingPoints(6)
         self.setRightPaddingPoints(6)
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowRadius = 4 /// it's the 'blur' in Figma
+        layer.shadowOffset = CGSize(width: 0, height: 4) /// width is 'x', height is 'y'
+        layer.shadowOpacity = 0.8 /// how transperent or bold the shadow is
     }
 
 }

@@ -58,6 +58,8 @@ final class CreateEventVC: UIViewController {
     }
     
     private func setupView() {
+        view.backgroundColor = UIColor(red: 30/255.0, green: 28/255.0, blue: 28/255.0, alpha: 1)
+        
         setupDateTF()
         setupSaveButton()
         setupCancelButton()
@@ -66,10 +68,6 @@ final class CreateEventVC: UIViewController {
     }
     
     //MARK:- Logic
-    
-    private func setupEventNameTF() {
-        
-    }
     
     private func setupDateTF() {
         dateTF.setupInputViewDatePicker(target: self, selector: #selector(tappedDone))
@@ -94,10 +92,12 @@ final class CreateEventVC: UIViewController {
         dateTF.resignFirstResponder()
     }
     
-    
     private func setupSaveButton() {
-        saveButton.backgroundColor = .green
         saveButton.addTarget(self, action: #selector(saveEvent), for: .touchUpInside)
+        
+        saveButton.setTitle("SAVE", for: .normal)
+        saveButton.setTitleColor(.customGreen, for: .normal)
+        saveButton.titleLabel?.font = UIFont(name: "Mada-Bold", size: 30)
     }
     
     @objc func saveEvent() {
@@ -128,8 +128,11 @@ final class CreateEventVC: UIViewController {
     }
     
     private func setupCancelButton() {
-        cancelButton.backgroundColor = .blue
         cancelButton.addTarget(self, action: #selector(cancelEvent), for: .touchUpInside)
+        
+        cancelButton.setTitle("BACK", for: .normal)
+        cancelButton.setTitleColor(.customRed, for: .normal)
+        cancelButton.titleLabel?.font = UIFont(name: "Mada-Bold", size: 30)
     }
     
     @objc func cancelEvent() {
@@ -156,7 +159,7 @@ final class CreateEventVC: UIViewController {
             eventNameTF.topAnchor.constraint(equalTo: eventNameLabel.bottomAnchor, constant: 6),
             eventNameTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding),
             eventNameTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding),
-            eventNameTF.heightAnchor.constraint(equalToConstant: 64),
+            eventNameTF.heightAnchor.constraint(equalToConstant: 80),
             
             dateLabel.topAnchor.constraint(equalTo: eventNameTF.bottomAnchor, constant: 20),
             dateLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding),
@@ -166,7 +169,7 @@ final class CreateEventVC: UIViewController {
             dateTF.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 6),
             dateTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding),
             dateTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding),
-            dateTF.heightAnchor.constraint(equalToConstant: 64),
+            dateTF.heightAnchor.constraint(equalToConstant: 80),
             
             saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             saveButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
