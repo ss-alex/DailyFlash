@@ -50,8 +50,17 @@ final class CreateEventVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if editFlag == true {
+     
             eventNameTF.text = editEventName
-            dateTF.text = editEventDate
+            
+            let stringInDateFormat = editEventDate
+        
+            let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: stringInDateFormat)
+            
+            let dateToCustomString = Helper.convertDateToCustomString(date: convertedDate)
+            dateTF.text = dateToCustomString
+            
+            
         } else {
             
             eventNameTF.attributedPlaceholder = NSAttributedString(
@@ -148,15 +157,21 @@ final class CreateEventVC: UIViewController {
         if editFlag == true {
             
             if let datePicker = dateTF.inputView as? UIDatePicker {
-                dateTF.text = Helper.convertDateToString(date: datePicker.date)
-                editEventDate = dateTF.text!
+                /*dateTF.text = Helper.convertDateToString(date: datePicker.date)
+                editEventDate = dateTF.text!*/
+                
+                dateTF.text = Helper.convertDateToCustomString(date: datePicker.date)
+                editEventName = Helper.convertDateToString(date: datePicker.date)
             }
             
         } else {
             
             if let datePicker = dateTF.inputView as? UIDatePicker {
-                dateTF.text = Helper.convertDateToString(date: datePicker.date)
-                dateTFString = dateTF.text!
+                /*dateTF.text = Helper.convertDateToString(date: datePicker.date)
+                dateTFString = dateTF.text!*/
+                
+                dateTF.text = Helper.convertDateToCustomString(date: datePicker.date)
+                dateTFString = Helper.convertDateToString(date: datePicker.date)
             }
         }
         
