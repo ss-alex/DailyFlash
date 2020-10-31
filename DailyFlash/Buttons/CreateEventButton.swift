@@ -28,7 +28,7 @@ final class CreateEventButton: UIButton  {
         setTitleColor(.customWhite, for: .normal)
         titleLabel?.font = UIFont(name: "Mada-Bold", size: 24)
         
-        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowColor = UIColor.systemBackground.cgColor
         layer.shadowRadius = 4 /// it's the 'blur' in Figma
         layer.shadowOffset = CGSize(width: 0, height: 4) /// width is 'x', height is 'y'
         layer.shadowOpacity = 0.8 /// how transperent or bold the shadow is

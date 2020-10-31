@@ -14,14 +14,15 @@ final class CreateEventVC: UIViewController {
     let eventNameLabel = CustomLabel(textColor: .customWhite, text: "Event name")
     var eventNameTF = CustomTF()
     
-    let dateLabel = CustomLabel(textColor: .customWhite, text: "Date")
+    let dateLabel = CustomLabel(textColor: .customWhite, text: "Event date")
     var dateTF = CustomTF()
-    var dateTFString: String = ""
+    
+    let saveButton = UIButton()
+    let backButton = UIButton()
     
     let datePicker = UIDatePicker()
     
-    let saveButton = UIButton()
-    let cancelButton = UIButton()
+    var dateTFString: String = ""
     
     var layoutElements: [UIView] = []
     
@@ -52,44 +53,35 @@ final class CreateEventVC: UIViewController {
             eventNameTF.text = editEventName
             dateTF.text = editEventDate
         } else {
-            eventNameTF.text = PlaceholderText.typeTheName
-            dateTF.text = PlaceholderText.pickTheDate
+            
+            eventNameTF.attributedPlaceholder = NSAttributedString(
+                string: PlaceholderText.typeTheName,
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.customWhite]
+            )
+            
+            dateTF.attributedPlaceholder = NSAttributedString(
+                string: PlaceholderText.pickTheDate,
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.customWhite]
+            )
         }
     }
     
     private func setupView() {
-        view.backgroundColor = UIColor(red: 30/255.0, green: 28/255.0, blue: 28/255.0, alpha: 1)
-        
+        view.backgroundColor = .customDarkGray
+
+        setupEventNameTF()
         setupDateTF()
         setupSaveButton()
-        setupCancelButton()
-        
+        setupBackButton()
         setupLayout()
     }
     
-    //MARK:- Logic
+    private func setupEventNameTF() {
+        eventNameTF.delegate = self
+    }
     
     private func setupDateTF() {
         dateTF.setupInputViewDatePicker(target: self, selector: #selector(tappedDone))
-    }
-    
-    @objc func tappedDone() {
-        if editFlag == true {
-            
-            if let datePicker = dateTF.inputView as? UIDatePicker {
-                dateTF.text = Helper.convertDateToString(date: datePicker.date)
-                editEventDate = dateTF.text!
-            }
-            
-        } else {
-            
-            if let datePicker = dateTF.inputView as? UIDatePicker {
-                dateTF.text = Helper.convertDateToString(date: datePicker.date)
-                dateTFString = dateTF.text!
-            }
-        }
-        
-        dateTF.resignFirstResponder()
     }
     
     private func setupSaveButton() {
@@ -100,50 +92,17 @@ final class CreateEventVC: UIViewController {
         saveButton.titleLabel?.font = UIFont(name: "Mada-Bold", size: 30)
     }
     
-    @objc func saveEvent() {
-        if editFlag == true {
-
-            guard let editName = eventNameTF.text else {
-                return print("CreateEventVC, saveEvent(), editName is empty - \(String(describing: eventNameTF.text)) ")
-            }
-            
-            let editConvertedDate = Helper.convertDateInLocalTimeZone(dateTFString: editEventDate)
-            
-            Helper.editToDB(editIndex: editIndex, editName: editName, editDate: editConvertedDate)
-            
-            self.editFlag = false
-            self.navigationController?.pushViewController(MainView(), animated: true)
-            
-        } else {
-            
-            let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: dateTFString)
-            
-            guard let titleText = eventNameTF.text else {
-                return print("titleTF has no instance")
-            }
-            
-            Helper.saveToDB(date: convertedDate, title: titleText ?? "No title")
-            self.navigationController?.pushViewController(MainView(), animated: true)
-        }
-    }
-    
-    private func setupCancelButton() {
-        cancelButton.addTarget(self, action: #selector(cancelEvent), for: .touchUpInside)
+    private func setupBackButton() {
+        backButton.addTarget(self, action: #selector(backEvent), for: .touchUpInside)
         
-        cancelButton.setTitle("BACK", for: .normal)
-        cancelButton.setTitleColor(.customRed, for: .normal)
-        cancelButton.titleLabel?.font = UIFont(name: "Mada-Bold", size: 30)
+        backButton.setTitle("BACK", for: .normal)
+        backButton.setTitleColor(.customRed, for: .normal)
+        backButton.titleLabel?.font = UIFont(name: "Mada-Bold", size: 30)
     }
     
-    @objc func cancelEvent() {
-        self.editFlag = false
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    //MARK:- UI Elements
     private func setupLayout() {
         
-        layoutElements = [eventNameLabel, eventNameTF, dateLabel, dateTF, saveButton, cancelButton]
+        layoutElements = [eventNameLabel, eventNameTF, dateLabel, dateTF, saveButton, backButton]
         
         for layoutElement in layoutElements {
             view.addSubview(layoutElement)
@@ -176,11 +135,64 @@ final class CreateEventVC: UIViewController {
             saveButton.widthAnchor.constraint(equalToConstant: (view.frame.width/2) - 30),
             saveButton.heightAnchor.constraint(equalToConstant: 60),
             
-            cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
-            cancelButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
-            cancelButton.widthAnchor.constraint(equalToConstant: (view.frame.width/2) - 30),
-            cancelButton.heightAnchor.constraint(equalToConstant: 60)
+            backButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            backButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -15),
+            backButton.widthAnchor.constraint(equalToConstant: (view.frame.width/2) - 30),
+            backButton.heightAnchor.constraint(equalToConstant: 60)
         ])
+    }
+    
+    //MARK:- OBJC Methods
+    
+    @objc func tappedDone() {
+        if editFlag == true {
+            
+            if let datePicker = dateTF.inputView as? UIDatePicker {
+                dateTF.text = Helper.convertDateToString(date: datePicker.date)
+                editEventDate = dateTF.text!
+            }
+            
+        } else {
+            
+            if let datePicker = dateTF.inputView as? UIDatePicker {
+                dateTF.text = Helper.convertDateToString(date: datePicker.date)
+                dateTFString = dateTF.text!
+            }
+        }
+        
+        dateTF.resignFirstResponder()
+    }
+    
+    @objc func saveEvent() {
+        if editFlag == true {
+
+            guard let editName = eventNameTF.text else {
+                return print("CreateEventVC, saveEvent(), editName is empty - \(String(describing: eventNameTF.text)) ")
+            }
+            
+            let editConvertedDate = Helper.convertDateInLocalTimeZone(dateTFString: editEventDate)
+            
+            Helper.editToDB(editIndex: editIndex, editName: editName, editDate: editConvertedDate)
+            
+            self.editFlag = false
+            self.navigationController?.pushViewController(MainView(), animated: true)
+            
+        } else {
+            
+            let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: dateTFString)
+            
+            guard let titleText = eventNameTF.text else {
+                return print("titleTF has no instance")
+            }
+            
+            Helper.saveToDB(date: convertedDate, title: titleText ?? "No title")
+            self.navigationController?.pushViewController(MainView(), animated: true)
+        }
+    }
+    
+    @objc func backEvent() {
+        self.editFlag = false
+        self.navigationController?.popViewController(animated: true)
     }
     
 }
@@ -188,5 +200,9 @@ final class CreateEventVC: UIViewController {
 extension CreateEventVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        textField.resignFirstResponder()
+        return true
     }
+    
+    
 }

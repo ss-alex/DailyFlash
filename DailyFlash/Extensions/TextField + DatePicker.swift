@@ -52,7 +52,7 @@ extension UITextField {
         
         toolBar.setItems([cancel, flexible, doneButton], animated: false)
         
-        self.inputAccessoryView = toolBar //inputAccessoryView puts toolBar above the datePicker.
+        self.inputAccessoryView = toolBar ///inputAccessoryView puts toolBar above the datePicker.
     }
     
     @objc func tappedCancel() {

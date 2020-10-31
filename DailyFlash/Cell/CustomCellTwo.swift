@@ -63,7 +63,7 @@ class CustomCellTwo: UITableViewCell {
         
         backView.backgroundColor = .customLightGray
         backView.layer.cornerRadius = 20
-        backView.layer.shadowColor = UIColor.black.cgColor
+        backView.layer.shadowColor = UIColor.systemBackground.cgColor
         backView.layer.shadowRadius = 4
         backView.layer.shadowOffset = CGSize(width: 0, height: 4)
         backView.layer.shadowOpacity = 0.8

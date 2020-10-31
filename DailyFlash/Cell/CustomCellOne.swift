@@ -24,7 +24,6 @@ class CustomCellOne: UITableViewCell {
         setupEventIndex()
         
         backgroundColor = .customDarkGray
-        //backgroundColor = .lightGray
     }
     
     required init?(coder: NSCoder) {
@@ -48,13 +47,11 @@ class CustomCellOne: UITableViewCell {
         
         NSLayoutConstraint.activate([
             indicatorView.topAnchor.constraint(equalTo: self.topAnchor, constant: 12),
-            //indicatorView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
             indicatorView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
             indicatorView.widthAnchor.constraint(equalToConstant: 14),
             indicatorView.heightAnchor.constraint(equalToConstant: 14),
             
             eventIndex.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            //eventIndex.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
             eventIndex.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -5),
             eventIndex.widthAnchor.constraint(equalToConstant: 20),
             eventIndex.heightAnchor.constraint(equalToConstant: 30),
@@ -62,8 +59,6 @@ class CustomCellOne: UITableViewCell {
             eventLabel.leftAnchor.constraint(equalTo: indicatorView.rightAnchor, constant: 10),
             eventLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
             eventLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
-            //eventTitle.rightAnchor.constraint(equalTo: eventIndex.leftAnchor, constant: -10)
-            //eventLabel.widthAnchor.constraint(equalToConstant: 174)
             eventLabel.widthAnchor.constraint(equalToConstant: 220)
         ])
     }
@@ -76,16 +71,13 @@ class CustomCellOne: UITableViewCell {
         eventLabel.font = UIFont(name: "Mada-Light", size: 22)
         eventLabel.textColor = .customWhite
         
-        //eventLabel.backgroundColor = .gray
         eventLabel.numberOfLines = 0 /// it allows any number of lines
         eventLabel.lineBreakMode = .byWordWrapping
-        //eventLabel.sizeToFit()
     }
     
     private func setupEventIndex() {
         eventIndex.font = UIFont(name: "Mada-Medium", size: 30)
         eventIndex.textColor = .customWhite
-        //eventIndex.backgroundColor = .customLightGray
         eventIndex.textAlignment = .center
     }
     
