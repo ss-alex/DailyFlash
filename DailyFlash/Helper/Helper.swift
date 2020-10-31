@@ -203,4 +203,13 @@ class Helper {
         return NSAttributedString(from: attributedStringComponents, defaultAttributes: defaultAttributes)!
     }
     
+    static func configureAlert(title: String, message: String, actionTitle: String) -> UIAlertController {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
+        
+        return alert
+    }
+    
 }

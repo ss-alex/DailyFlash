@@ -15,7 +15,7 @@ final class CreateEventVC: UIViewController {
     var eventNameTF = CustomTF()
     
     let dateLabel = CustomLabel(textColor: .customWhite, text: "Event date")
-    var dateTF = CustomTF()
+    var eventDateTF = CustomTF()
     
     let saveButton = UIButton()
     let backButton = UIButton()
@@ -30,6 +30,9 @@ final class CreateEventVC: UIViewController {
     var editEventName: String = ""
     var editEventDate: String = ""
     var editIndex: Int = 0
+    
+    //var isEventNameEntered: Bool { return !eventNameTF.text!.isEmpty }
+    //var isEventDateEntered: Bool { return !eventDateTF.text!.isEmpty }
     
     var delegate: DataDelegate?
     
@@ -46,6 +49,11 @@ final class CreateEventVC: UIViewController {
     
     override func viewDidLoad() {
         setupView()
+        
+        print("CreateEventVC. eventNameTF.text - \(eventNameTF.text)")
+        print("CreateEventVC. eventNameTF.text!.isEmpty - \(eventNameTF.text!.isEmpty)")
+        print("CreateEventVC. eventDateTF.text - \(eventDateTF.text)")
+        print("CreateEventVC. eventDateTF.text!.isEmpty - \(eventDateTF.text!.isEmpty)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +66,7 @@ final class CreateEventVC: UIViewController {
             let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: stringInDateFormat)
             
             let dateToCustomString = Helper.convertDateToCustomString(date: convertedDate)
-            dateTF.text = dateToCustomString
+            eventDateTF.text = dateToCustomString
             
             
         } else {
@@ -68,7 +76,7 @@ final class CreateEventVC: UIViewController {
                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.customWhite]
             )
             
-            dateTF.attributedPlaceholder = NSAttributedString(
+            eventDateTF.attributedPlaceholder = NSAttributedString(
                 string: PlaceholderText.pickTheDate,
                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.customWhite]
             )
@@ -90,7 +98,7 @@ final class CreateEventVC: UIViewController {
     }
     
     private func setupDateTF() {
-        dateTF.setupInputViewDatePicker(target: self, selector: #selector(tappedDone))
+        eventDateTF.setupInputViewDatePicker(target: self, selector: #selector(tappedDone))
     }
     
     private func setupSaveButton() {
@@ -111,7 +119,7 @@ final class CreateEventVC: UIViewController {
     
     private func setupLayout() {
         
-        layoutElements = [eventNameLabel, eventNameTF, dateLabel, dateTF, saveButton, backButton]
+        layoutElements = [eventNameLabel, eventNameTF, dateLabel, eventDateTF, saveButton, backButton]
         
         for layoutElement in layoutElements {
             view.addSubview(layoutElement)
@@ -134,10 +142,10 @@ final class CreateEventVC: UIViewController {
             dateLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding),
             dateLabel.heightAnchor.constraint(equalToConstant: 24),
             
-            dateTF.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 6),
-            dateTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding),
-            dateTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding),
-            dateTF.heightAnchor.constraint(equalToConstant: 80),
+            eventDateTF.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 6),
+            eventDateTF.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding),
+            eventDateTF.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding),
+            eventDateTF.heightAnchor.constraint(equalToConstant: 80),
             
             saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             saveButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
@@ -156,52 +164,70 @@ final class CreateEventVC: UIViewController {
     @objc func tappedDone() {
         if editFlag == true {
             
-            if let datePicker = dateTF.inputView as? UIDatePicker {
-                /*dateTF.text = Helper.convertDateToString(date: datePicker.date)
-                editEventDate = dateTF.text!*/
-                
-                dateTF.text = Helper.convertDateToCustomString(date: datePicker.date)
+            if let datePicker = eventDateTF.inputView as? UIDatePicker {
+                eventDateTF.text = Helper.convertDateToCustomString(date: datePicker.date)
                 editEventName = Helper.convertDateToString(date: datePicker.date)
             }
             
         } else {
             
-            if let datePicker = dateTF.inputView as? UIDatePicker {
-                /*dateTF.text = Helper.convertDateToString(date: datePicker.date)
-                dateTFString = dateTF.text!*/
-                
-                dateTF.text = Helper.convertDateToCustomString(date: datePicker.date)
+            if let datePicker = eventDateTF.inputView as? UIDatePicker {
+                eventDateTF.text = Helper.convertDateToCustomString(date: datePicker.date)
                 dateTFString = Helper.convertDateToString(date: datePicker.date)
             }
         }
         
-        dateTF.resignFirstResponder()
+        eventDateTF.resignFirstResponder()
     }
     
     @objc func saveEvent() {
         if editFlag == true {
 
-            guard let editName = eventNameTF.text else {
-                return print("CreateEventVC, saveEvent(), editName is empty - \(String(describing: eventNameTF.text)) ")
+            
+            if eventNameTF.text!.isEmpty || eventDateTF.text!.isEmpty {
+                
+                let customAlert = Helper.configureAlert(title: "Attention.",
+                                                        message: "Some data is missing. Doublecheck it!",
+                                                        actionTitle: "Ok")
+                
+                self.present(customAlert, animated: true, completion: nil)
+                
+            } else {
+                
+                guard let editName = eventNameTF.text else { return print("CreateEventVC, saveEvent(), editName is empty - \(String(describing: eventNameTF.text))") }
+                
+                let editConvertedDate = Helper.convertDateInLocalTimeZone(dateTFString: editEventDate)
+                
+                Helper.editToDB(editIndex: editIndex, editName: editName, editDate: editConvertedDate)
+                
+                self.editFlag = false
+                //view.endEditing(true)
+                self.navigationController?.pushViewController(MainView(), animated: true)
             }
-            
-            let editConvertedDate = Helper.convertDateInLocalTimeZone(dateTFString: editEventDate)
-            
-            Helper.editToDB(editIndex: editIndex, editName: editName, editDate: editConvertedDate)
-            
-            self.editFlag = false
-            self.navigationController?.pushViewController(MainView(), animated: true)
+      
             
         } else {
             
-            let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: dateTFString)
-            
-            guard let titleText = eventNameTF.text else {
-                return print("titleTF has no instance")
+            if eventNameTF.text!.isEmpty || eventDateTF.text!.isEmpty {
+                
+                let customAlert = Helper.configureAlert(title: "Attention.",
+                                                        message: "Some data is missing. Doublecheck it!",
+                                                        actionTitle: "Ok")
+                
+                self.present(customAlert, animated: true, completion: nil)
+                
+            } else {
+                
+                let convertedDate = Helper.convertDateInLocalTimeZone(dateTFString: dateTFString)
+                
+                guard let titleText = eventNameTF.text else { return print("titleTF has no instance") }
+                
+                Helper.saveToDB(date: convertedDate, title: titleText ?? "No title")
+                
+                //final logic
+                view.endEditing(true)
+                self.navigationController?.pushViewController(MainView(), animated: true)
             }
-            
-            Helper.saveToDB(date: convertedDate, title: titleText ?? "No title")
-            self.navigationController?.pushViewController(MainView(), animated: true)
         }
     }
     
