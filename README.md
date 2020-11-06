@@ -17,5 +17,5 @@ App that helps you not to forget about upcoming events.
   You just need to clone the project, no 3rd party libraries were used.
   
 ## UI Design:
-<img src="DailyFlash/DailyFlash/Resources/Images/DailyFlash.001.png" width="1000">
+<img src="DailyFlash/Resources/Images/DailyFlash.001.png" width="1000">
  
