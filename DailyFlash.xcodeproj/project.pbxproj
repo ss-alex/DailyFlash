@@ -32,6 +32,7 @@
 		D9E4052724CE999E00A90D0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9E4052524CE999E00A90D0A /* LaunchScreen.storyboard */; };
 		D9E4052F24CE9AF000A90D0A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E4052E24CE9AF000A90D0A /* MainView.swift */; };
 		D9E4053224CE9B4200A90D0A /* CreateEventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E4053124CE9B4200A90D0A /* CreateEventVC.swift */; };
+		D9FC3D212555127900C41030 /* DailyFlash.001.png in Resources */ = {isa = PBXBuildFile; fileRef = D9FC3D202555127900C41030 /* DailyFlash.001.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		D9E4052824CE999E00A90D0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9E4052E24CE9AF000A90D0A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D9E4053124CE9B4200A90D0A /* CreateEventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventVC.swift; sourceTree = "<group>"; };
+		D9FC3D202555127900C41030 /* DailyFlash.001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DailyFlash.001.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		D94AF282253B569C00A2DB33 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D9FC3D1E255511EE00C41030 /* Images */,
 				D94AF27F253B54DE00A2DB33 /* Fonts */,
 			);
 			path = Resources;
@@ -212,6 +215,14 @@
 			path = DailyFlash;
 			sourceTree = "<group>";
 		};
+		D9FC3D1E255511EE00C41030 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D9FC3D202555127900C41030 /* DailyFlash.001.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -275,6 +286,7 @@
 				D95B971E253C8A8100A30B7D /* CantoraOne-Regular_0f89264953a1f3ff76370ebee70f5adb.ttf in Resources */,
 				D95B971F253C8A8100A30B7D /* Mada-Regular_2e7ad3bd01a5a19f7621f9af040e21bc.ttf in Resources */,
 				D95B9720253C8A8100A30B7D /* Mada-Light_bc425868c05f376407ea583727e2847e.ttf in Resources */,
+				D9FC3D212555127900C41030 /* DailyFlash.001.png in Resources */,
 				D9E4052424CE999E00A90D0A /* Assets.xcassets in Resources */,
 				D95B971D253C8A8100A30B7D /* Mada-Medium_56b23220cc069db290360ac2c3a9e016.ttf in Resources */,
 			);

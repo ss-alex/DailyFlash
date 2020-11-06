@@ -35,7 +35,7 @@ class CustomTF: UITextField {
         self.setLeftPaddingPoints(6)
         self.setRightPaddingPoints(6)
         
-        layer.shadowColor = UIColor.systemBackground.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowRadius = 4 /// it's the 'blur' in Figma
         layer.shadowOffset = CGSize(width: 0, height: 4) /// width is 'x', height is 'y'
         layer.shadowOpacity = 0.8 /// how transperent or bold the shadow is

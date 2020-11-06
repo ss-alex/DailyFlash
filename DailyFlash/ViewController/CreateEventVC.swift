@@ -31,9 +31,6 @@ final class CreateEventVC: UIViewController {
     var editEventDate: String = ""
     var editIndex: Int = 0
     
-    //var isEventNameEntered: Bool { return !eventNameTF.text!.isEmpty }
-    //var isEventDateEntered: Bool { return !eventDateTF.text!.isEmpty }
-    
     var delegate: DataDelegate?
     
     let padding: CGFloat = 20
@@ -49,11 +46,6 @@ final class CreateEventVC: UIViewController {
     
     override func viewDidLoad() {
         setupView()
-        
-        print("CreateEventVC. eventNameTF.text - \(eventNameTF.text)")
-        print("CreateEventVC. eventNameTF.text!.isEmpty - \(eventNameTF.text!.isEmpty)")
-        print("CreateEventVC. eventDateTF.text - \(eventDateTF.text)")
-        print("CreateEventVC. eventDateTF.text!.isEmpty - \(eventDateTF.text!.isEmpty)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
